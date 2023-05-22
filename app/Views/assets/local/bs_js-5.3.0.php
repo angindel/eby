@@ -1,0 +1,1 @@
+<script src="<?= base_url('asset/bs-5.3.0/js/bootstrap.bundle.min.js') ?>"></script>

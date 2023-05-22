@@ -1,0 +1,1 @@
+<script src="https://cdn.datatables.net/v/bs4/dt-1.13.4/b-2.3.6/r-2.4.1/datatables.min.js"></script>
