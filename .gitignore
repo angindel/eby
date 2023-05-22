@@ -11,3 +11,4 @@ spark
 system/
 tests/
 writable/
+/app/Config/Database.php
