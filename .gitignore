@@ -1,0 +1,13 @@
+/.env
+/LICENSE
+/README.md
+app.old/
+/composer.json
+/phpunit.xml.dist
+/preload.php
+/produk.sql
+public/
+spark
+system/
+tests/
+writable/
