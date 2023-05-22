@@ -12,3 +12,4 @@ system/
 tests/
 writable/
 /app/Config/Database.php
+/app/Config/App.php
