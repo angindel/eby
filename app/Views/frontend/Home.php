@@ -74,27 +74,25 @@
     <div class="col-2">
         <div class="card">
             <div class="card-body">
-                <a href="#"><?= $row->nama_kategori ?></a>
+                <a href="<?= $row->nama_kategori ?>"></a>
             </div>
         </div>
     </div>
     <?php } ?>
 </div>
-  <section class="row px-sm-2">
-        <div id="produk-terbaru" class='col-md-9 col-lg-9'>
-            <header class="row header">
-                <div class="col-6">
-                    <h2>
-                        <a href="#" title="Produk Terbaru" rel="category">EBYKARYA TERBARU</a>
-                    </h2>
+
+            <div class="row bg-primary align-items-center ps-2 py-2 my-2">
+                <div class="col-8 m-0 p-0 justify-content-start">
+                    <h2 class="align-items-stretch m-0 p-0">EBYKARYA TERBARU</h2>
                 </div>
-                <div class="col-6 text-end">
-                    <a href="#" class="btn btn-primary btn-sm btn-lc" title="Produk Terbaru" rel="category">SEMUA</a>
+                <div class="col-4 text-end m-0 p-0">
+                    <a href="#" class="btn btn-primary btn-sm btn-lc me-2" title="Produk Terbaru" rel="category">SEMUA</a>
                 </div>
-            </header>
-            <div class="row row-cols-3 row-cols-md-4 row-cols-lg-6">
+            </div>
+            
+            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 p-0 m-0">
                 <?php foreach($produk_new as $row) { ?>
-                  <div class="col p-1 mb-1">
+                  <div class="col px-1 mb-1">
                     <div class="card h-100">
                         <a href="<?= base_url("produk/detail/$row->produk_seo") ?>">
                             <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img-top" alt="...">
@@ -110,36 +108,8 @@
                 </div>
                 <?php } ?>
             </div>                
-        </div>
-</section>
 
-  <div class="row my-5">
-    <div class="card-group">
-        <div class="card border-light px-2">
-            <a href="#">
-                <img src="<?= base_url() ?>asset/foto_iklan/a1.webp" class="card-img-top" alt="...">
-            </a>
-        </div>
-        <div class="card border-light px-2">
-            <a href="#">
-                <img src="<?= base_url() ?>asset/foto_iklan/a2.webp" class="card-img-top" alt="...">
-            </a>
-        </div>
-        <div class="card border-light px-2">
-            <a href="#">
-                <img src="<?= base_url() ?>asset/foto_iklan/a3.webp" class="card-img-top" alt="...">
-            </a>
-        </div>
-    </div>
-  </div>
-  <!-- PRODUK -->
-  <?= $this->include('layout/home/produk') ?>
-  <!-- END PRODUK -->
-  <!-- PAGINATION -->
-  <?= $pager->links('produk' , 'bs_pagination') ?>  
-  <!-- END PAGINATION -->
-
-  <div class="row">
+  <div class="row pt-5 mt-5">
       <div class="col">PAYMENT CHANNEL</div>
       <div class="col">DELIVERY SERVICE</div>
   </div>
