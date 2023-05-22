@@ -69,6 +69,17 @@
 </div>
   </div>
   <!-- END Carousel -->
+<div class="row pb-1">
+    <?php foreach($kategori as $row) { ?>
+    <div class="col-2">
+        <div class="card">
+            <div class="card-body">
+                <a href="#"><?= $row->nama_kategori ?></a>
+            </div>
+        </div>
+    </div>
+    <?php } ?>
+</div>
   <section class="row px-sm-2">
         <div id="produk-terbaru" class='col-md-9 col-lg-9'>
             <header class="row header">
@@ -100,20 +111,6 @@
                 <?php } ?>
             </div>                
         </div>
-    <aside class="sidebar col-sm-12 col-md-3 col-lg-3">
-        <div class="row pt-0 pb-1">
-            <div class="card">
-                <div class="card-header">Kategori</div>
-                <ul class="list-group list-group-flush">
-                <?php foreach($kategori as $row) { ?>
-                <li class="list-group-item">
-                    <a href="#"><?= $row->nama_kategori ?></a>
-                </li>
-                <?php } ?>
-                </ul>
-            </div>
-        </div>
-    </aside>
 </section>
 
   <div class="row my-5">
