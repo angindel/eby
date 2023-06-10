@@ -4,11 +4,13 @@
 <?= $this->section('cdn-head') ?>
     <?= $this->include('assets/local/bs_css-5.3.0') ?>
     <link rel="stylesheet" type="text/css" href="<?= base_url('asset/css/style-local.css') ?>">
-<?= $this->endSection('cdn-head') ?>
+    <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.carousel.min.css") ?>">
+<link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.theme.default.min.css") ?>">
+<?= $this->endSection() ?>
 
 <?= $this->section('cdn-foot') ?>
     <?= $this->include('assets/local/bs_js-5.3.0') ?>
-<?= $this->endSection('cdn-foot') ?>
+<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 <body>
@@ -35,39 +37,19 @@
 
 <main class="container-fluid">
   <!-- Carousel -->
-
   <div class="row my-3 py-3">
-      <div id="carousel-slider" class="carousel slide carousel-fade" data-bs-ride="carousel">
-
-  <!-- Indicators/dots -->
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carousel-slider" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#carousel-slider" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#carousel-slider" data-bs-slide-to="2"></button>
-  </div>
-  
-  <!-- The slideshow/carousel -->
-  <div class="carousel-inner">
-    <div class="carousel-item active">
+  <div class="head-slide owl-carousel owl-theme">
+    <div class="item">
       <img src="<?= base_url() ?>asset/foto_slide/hijab1.jpg" alt="Los Angeles" class="d-block w-100">
     </div>
-    <div class="carousel-item">
+    <div class="item">
       <img src="<?= base_url() ?>asset/foto_slide/hijab2.jpg" alt="Chicago" class="d-block w-100">
     </div>
-    <div class="carousel-item">
+    <div class="item">
       <img src="<?= base_url() ?>asset/foto_slide/hijab3.jpg" alt="New York" class="d-block w-100">
     </div>
   </div>
-  
-  <!-- Left and right controls/icons -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-slider" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carousel-slider" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
 </div>
-  </div>
   <!-- END Carousel -->
 <div class="row pb-1">
     <?php foreach($kategori as $row) { ?>
@@ -79,6 +61,22 @@
         </div>
     </div>
     <?php } ?>
+</div>
+<div class="row">
+    <div class="produk-slide owl-carousel owl-theme">
+        <div class="item"><h4>1</h4></div>
+        <div class="item"><h4>2</h4></div>
+        <div class="item"><h4>3</h4></div>
+        <div class="item"><h4>4</h4></div>
+        <div class="item"><h4>5</h4></div>
+        <div class="item"><h4>6</h4></div>
+        <div class="item"><h4>7</h4></div>
+        <div class="item"><h4>8</h4></div>
+        <div class="item"><h4>9</h4></div>
+        <div class="item"><h4>10</h4></div>
+        <div class="item"><h4>11</h4></div>
+        <div class="item"><h4>12</h4></div>
+    </div>
 </div>
 
             <div class="row bg-primary align-items-center ps-2 py-2 my-2">
@@ -117,14 +115,22 @@
       <div class="col">FOOTER</div>
   </div>
 </main>
-
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="<?= base_url("owlcarousel/dist/owl.carousel.min.js") ?>"></script>
 <script type="text/javascript">
-    const myCarouselElement = document.querySelector('#carouselExampleIndicators')
-    const carousel = new bootstrap.Carousel(myCarouselElement, {
-        interval: 2000,
-        touch: false
-    })
-
+    $(document).ready(function(){
+        $(".head-slide").owlCarousel({
+            loop:true,
+            margin:10,
+            nav:true,
+            smartSpeed: 1000,
+            autoplay: true,
+            autoplayTimeout: 8000,
+            autoplaySpeed: 1000,
+            navText: false,
+        });
+        $(".produk-slide").owlCarousel();
+    });
 </script>
 
-<?= $this->endSection('content') ?>
+<?= $this->endSection() ?>
