@@ -37,16 +37,16 @@
 
 <main class="container-fluid">
   <!-- Carousel -->
-  <div class="row my-3 py-3">
-  <div class="head-slide owl-carousel owl-theme">
+  <div class="row mb-3">
+  <div id="head-slide" class="owl-carousel owl-theme">
     <div class="item">
-      <img src="<?= base_url() ?>asset/foto_slide/hijab1.jpg" alt="Los Angeles" class="d-block w-100">
+      <img src="<?= base_url() ?>asset/foto_slide/hijab1.jpg" alt="Los Angeles" class="w-100">
     </div>
     <div class="item">
-      <img src="<?= base_url() ?>asset/foto_slide/hijab2.jpg" alt="Chicago" class="d-block w-100">
+      <img src="<?= base_url() ?>asset/foto_slide/hijab2.jpg" alt="Chicago" class="w-100">
     </div>
     <div class="item">
-      <img src="<?= base_url() ?>asset/foto_slide/hijab3.jpg" alt="New York" class="d-block w-100">
+      <img src="<?= base_url() ?>asset/foto_slide/hijab3.jpg" alt="New York" class="w-100">
     </div>
   </div>
 </div>
@@ -63,19 +63,20 @@
     <?php } ?>
 </div>
 <div class="row">
-    <div class="produk-slide owl-carousel owl-theme">
-        <div class="item"><h4>1</h4></div>
-        <div class="item"><h4>2</h4></div>
-        <div class="item"><h4>3</h4></div>
-        <div class="item"><h4>4</h4></div>
-        <div class="item"><h4>5</h4></div>
-        <div class="item"><h4>6</h4></div>
-        <div class="item"><h4>7</h4></div>
-        <div class="item"><h4>8</h4></div>
-        <div class="item"><h4>9</h4></div>
-        <div class="item"><h4>10</h4></div>
-        <div class="item"><h4>11</h4></div>
-        <div class="item"><h4>12</h4></div>
+    <div class="produk-slide owl-carousel owl-theme align-items-stretch">
+<?php foreach($produk_new as $row) { ?>
+                  <div class="col d-flex align-items-stretch">
+                    <div class="card">
+                        <a href="<?= base_url("produk/detail/$row->produk_seo") ?>">
+                            <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body p-0 m-1">
+                            <h5 class="card-title">Rp.<?= rupiah($row->harga_konsumen) ?></h5>
+                            <a href="<?= base_url("produk/detail/$row->produk_seo") ?>" style="text-decoration: none;"><h5 class="card-text lh-sm caption-pb "><?= $row->nama_produk ?></h5></a>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
     </div>
 </div>
 
@@ -119,17 +120,40 @@
 <script src="<?= base_url("owlcarousel/dist/owl.carousel.min.js") ?>"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".head-slide").owlCarousel({
+        $("#head-slide").owlCarousel({
+          items:1,
+          navText: false,
+          dots:false,
             loop:true,
-            margin:10,
-            nav:true,
-            smartSpeed: 1000,
+            smartSpeed: 500,
             autoplay: true,
-            autoplayTimeout: 8000,
-            autoplaySpeed: 1000,
-            navText: false,
+            autoplayTimeout: 4000,
+            autoplaySpeed: 500,
         });
-        $(".produk-slide").owlCarousel();
+        $(".produk-slide").owlCarousel({
+          dots:false,
+          autoplay:true,
+          autoplaySpeed: 250,
+          autoplayTimeout:2000,
+          smartSpeed:250,
+          loop:true,
+          center:true,
+          responsiveClass:true,
+          responsive: {
+            0:{
+              items:3
+            },
+            480:{
+              items:5
+            },
+            768:{
+              items:7
+            },
+            1024:{
+              items:9
+            },
+          }
+        });
     });
 </script>
 
