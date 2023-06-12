@@ -37,7 +37,7 @@
 
 <main class="container-fluid">
   <!-- Carousel -->
-  <div class="row mb-3">
+  <div class="row my-0 py-0">
   <div id="head-slide" class="owl-carousel owl-theme">
     <div class="item">
       <img src="<?= base_url() ?>asset/foto_slide/hijab1.jpg" alt="Los Angeles" class="w-100">
@@ -62,23 +62,19 @@
     </div>
     <?php } ?>
 </div>
-<div class="row">
-    <div class="produk-slide owl-carousel owl-theme align-items-stretch">
-<?php foreach($produk_new as $row) { ?>
-                  <div class="col d-flex align-items-stretch">
-                    <div class="card">
-                        <a href="<?= base_url("produk/detail/$row->produk_seo") ?>">
-                            <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body p-0 m-1">
-                            <h5 class="card-title">Rp.<?= rupiah($row->harga_konsumen) ?></h5>
-                            <a href="<?= base_url("produk/detail/$row->produk_seo") ?>" style="text-decoration: none;"><h5 class="card-text lh-sm caption-pb "><?= $row->nama_produk ?></h5></a>
-                        </div>
-                    </div>
-                </div>
-                <?php } ?>
+    <div id="produk-slide" class="owl-carousel owl-theme">
+        <?php foreach($produk_new as $row) { ?>
+        <div class="card p-1 mr-1">
+            <a href="<?= base_url("produk/detail/$row->produk_seo") ?>">
+                <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body p-0 m-1">
+                <p class="card-title" style="font-size:12px;">Rp.<?= rupiah($row->harga_konsumen) ?></p>
+                <a href="<?= base_url("produk/detail/$row->produk_seo") ?>" style="text-decoration: none;"><h5 class="card-text lh-sm caption-pb "><?= $row->nama_produk ?></h5></a>
+            </div>
+        </div>
+        <?php } ?>
     </div>
-</div>
 
             <div class="row bg-primary align-items-center ps-2 py-2 my-2">
                 <div class="col-8 m-0 p-0 justify-content-start">
@@ -88,16 +84,16 @@
                     <a href="#" class="btn btn-primary btn-sm btn-lc me-2" title="Produk Terbaru" rel="category">SEMUA</a>
                 </div>
             </div>
-            
+            <div id="main-infscroll">
             <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 p-0 m-0">
-                <?php foreach($produk_new as $row) { ?>
-                  <div class="col px-1 mb-1">
+                <?php foreach($produk as $row) { ?>
+                  <div id="post-infscroll" class="col px-1 mb-1">
                     <div class="card h-100">
                         <a href="<?= base_url("produk/detail/$row->produk_seo") ?>">
                             <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img-top" alt="...">
                         </a>
                         <div class="card-body p-0 m-1">
-                            <h6 class="card-title">Rp.<?= rupiah($row->harga_konsumen) ?></h5>
+                            <h5 class="card-title">Rp.<?= rupiah($row->harga_konsumen) ?></h5>
                             <a href="<?= base_url("produk/detail/$row->produk_seo") ?>" style="text-decoration: none;"><h3 class="card-text lh-sm caption-pb "><?= $row->nama_produk ?></h3></a>
                         </div>
                         <ul class="list-group list-group-flush text-end border border-top-0">
@@ -106,7 +102,12 @@
                     </div>
                 </div>
                 <?php } ?>
-            </div>                
+            </div>
+            <a class="pagination__next" href="/page/2">Next</a>
+        </div>
+
+<?= $pager->links('produk') ?>
+
 
   <div class="row pt-5 mt-5">
       <div class="col">PAYMENT CHANNEL</div>
@@ -118,6 +119,7 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script src="<?= base_url("owlcarousel/dist/owl.carousel.min.js") ?>"></script>
+<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#head-slide").owlCarousel({
@@ -130,7 +132,8 @@
             autoplayTimeout: 4000,
             autoplaySpeed: 500,
         });
-        $(".produk-slide").owlCarousel({
+
+        $("#produk-slide").owlCarousel({
           dots:false,
           autoplay:true,
           autoplaySpeed: 250,
@@ -153,6 +156,13 @@
               items:9
             },
           }
+        });
+
+        $('#main-infscroll').infiniteScroll({
+          // options
+          path: '.pagination__next',
+          append: '#post-infscroll',
+          history: false,
         });
     });
 </script>
