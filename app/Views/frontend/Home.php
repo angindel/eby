@@ -85,9 +85,9 @@
                 </div>
             </div>
             <div id="main-infscroll">
-            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 p-0 m-0">
-                <?php foreach($produk as $row) { ?>
-                  <div id="post-infscroll" class="col px-1 mb-1">
+            <div id="post-infscroll" class="row row-cols-2 row-cols-md-4 row-cols-lg-6 p-0 m-0">
+                <?php foreach($produk_new as $row) { ?>
+                  <div class="col px-1 mb-1">
                     <div class="card h-100">
                         <a href="<?= base_url("produk/detail/$row->produk_seo") ?>">
                             <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img-top" alt="...">
@@ -103,10 +103,8 @@
                 </div>
                 <?php } ?>
             </div>
-            <a class="pagination__next" href="/page/2">Next</a>
+            <a class="pagination__next btn btn-sm">Next</a>
         </div>
-
-<?= $pager->links('produk') ?>
 
 
   <div class="row pt-5 mt-5">
@@ -119,7 +117,7 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script src="<?= base_url("owlcarousel/dist/owl.carousel.min.js") ?>"></script>
-<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+<script src="https://unpkg.com/infinite-scroll@4.0.1/dist/infinite-scroll.pkgd.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#head-slide").owlCarousel({
@@ -158,11 +156,14 @@
           }
         });
 
-        $('#main-infscroll').infiniteScroll({
-          // options
-          path: '.pagination__next',
-          append: '#post-infscroll',
-          history: false,
+        $(".pagination__next").on("click", function(){
+          $.ajax({
+            url: "<?= base_url('tes/2') ?>",
+            type : 'get',
+            success: function(data){
+              $("#post-infscroll>.col:last").after(data).show().fadeIn("slow");
+            },
+          });
         });
     });
 </script>

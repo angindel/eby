@@ -35,6 +35,7 @@ $routes->get('produk/detail/(:any)', 'Home::produk_detail/$1');
 $routes->cli('tools', 'Tools::message');
 $routes->get('tools', 'Tools::message');
 $routes->post('tools', 'Tools::message');
+$routes->get('tes/(:num)', 'Home::produkIS/$1');
 
 use App\Controllers\Administrator;
 $routes->post('administrator/login', [Administrator::class, 'login']);
