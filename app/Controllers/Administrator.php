@@ -453,6 +453,14 @@ class Administrator extends BaseController
 
     }
 
+    public function website_payment_channel()
+    {
+        $data['kategori_produk'] = $this->m_katpro->findAll();
+        $data['title'] = 'kategori';
+        $data['path'] = end($this->data['path']);
+        return view('backend/website/Payment-channel', $data);
+    }
+
     public function direct()
     {
         return redirect()->to('administrator');

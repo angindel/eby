@@ -83,6 +83,48 @@
               </p>
             </a>
           </li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-book"></i>
+        <p>
+            Website
+            <i class="fas fa-angle-right right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="<?= route_to('admin.website.payment-channel') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Payment Channel</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="pages/examples/contacts.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Delivery Service</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="pages/examples/contacts.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Contacts</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="pages/examples/faq.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>FAQ</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="pages/examples/contact-us.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Contact us</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
           <li class="nav-item">
             <a href="<?= base_url('administrator/logout') ?>" class="nav-link">
               <i class="nav-icon fas fa-solid fa-power-off"></i>

@@ -23,8 +23,7 @@
                       <tr>
                         <th style='width:30px'>No</th>
                         <th>Nama Kategori</th>
-                        <th style='width:140px'>Gambar</th>
-                        <th style='width:100px'>Action</th>
+                        <th style='width:70px'>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -34,15 +33,13 @@
                       <tr>
                         <td><?= $no ?></td>
                         <td><?= $row->nama_kategori ?></td>
-                        <td class="p-0"><center><i class="fa-solid fa-image fa-5x"></i></center></td>
                         <td>
                           <center>
-                            <a class="btn btn-success btn-xs" title="Edit Data" href="<?= base_url("administrator/edit_produk/$row->id_kategori_produk") ?>">
-                              <i class='fa fa-edit fa-xl'></i>
+                            <a class="btn btn-success btn-xs" title="Edit Data" href="<?= base_url("administrator/edit_produk/$row->id_kategori_produk") ?>"">
+                              <span class='fa fa-edit'></span>
                             </a>
-                            <a class='btn btn-danger btn-xs' title='Delete Data' href="<?= base_url("administrator/delete_produk/$row->id_kategori_produk") ?>" ><i class='fa fa-remove fa-xl'></i></a>
-                          </center>
-                        </td>
+                            <a class='btn btn-danger btn-xs' title='Delete Data' href="<?= base_url("administrator/delete_produk/$row->id_kategori_produk") ?>"" ><span class='fa fa-remove'></span></a>
+                        </center></td>
                       </tr>
                   <?php 
                       $no++;
@@ -56,4 +53,4 @@
       </div>
     </section>
     <!-- /.content -->
-<?= $this->endSection() ?>
+<?= $this->endSection('content') ?>

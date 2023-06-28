@@ -20,7 +20,8 @@ class AddColumnStok extends Migration
             ]
         ];
 
-        $this->forge->addColumn('stok', $fields);    }
+        $this->forge->addColumn('stok', $fields);
+    }
 
     public function down()
     {

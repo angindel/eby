@@ -30,12 +30,14 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('produk/detail/(:any)', 'Home::produk_detail/$1');
+$routes->get('produk/kategori/(:any)', 'Home::produk_kategori/$1');
 
 
 $routes->cli('tools', 'Tools::message');
 $routes->get('tools', 'Tools::message');
 $routes->post('tools', 'Tools::message');
 $routes->get('tes/(:num)', 'Home::produkIS/$1');
+$routes->get('tes/(:num)/(:num)', 'Home::produkIS/$1/$2');
 
 use App\Controllers\Administrator;
 $routes->post('administrator/login', [Administrator::class, 'login']);
@@ -45,6 +47,7 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->get('dashboard', [Administrator::class, 'dashboard']);
     $routes->get('identitas', [Administrator::class, 'identitas'], ['as' => 'admin.identitas']);
     $routes->post('identitas/proses_edit_identitas', [Administrator::class, 'edit_identitas'], ['as' => 'admin.identitas.edit']);
+    $routes->get('website/payment-channel', [Administrator::class, 'website_payment_channel'], ['as' => 'admin.website.payment-channel']);
     $routes->get('produk', [Administrator::class, 'produk']);
     $routes->get('tambah_produk', [Administrator::class, 'tambah_produk']);
     $routes->post('proses_tambah_produk', [Administrator::class, 'proses_produk']);

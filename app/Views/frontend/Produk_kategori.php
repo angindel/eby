@@ -3,9 +3,23 @@
 
 <?= $this->section('cdn-head') ?>
     <?= $this->include('assets/local/bs_css-5.3.0') ?>
-    <?= $this->include('assets/local/style-local') ?>
+    <link rel="stylesheet" type="text/css" href="<?= base_url('asset/css/style-local.css') ?>">
     <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.carousel.min.css") ?>">
 <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.theme.default.min.css") ?>">
+<style type="text/css">
+ .page-load-status {
+  display: none; /* hidden by default */
+  padding-top: 20px;
+  border-top: 1px solid #DDD;
+  text-align: center;
+  color: #777;
+}
+#head-slide  .item img{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+</style>
 <?= $this->endSection() ?>
 
 <?= $this->section('cdn-foot') ?>
@@ -36,52 +50,19 @@
 </nav>
 
 <main class="container-fluid">
-    <!-- SLIDE -->
-    <div class="row">
-      <div id="head-slide" class="owl-carousel owl-theme p-0">
-        <div class="item">
-          <img src="<?= base_url() ?>asset/foto_slide/hijab1.jpg" alt="Los Angeles">
-        </div>
-        <div class="item">
-          <img src="<?= base_url() ?>asset/foto_slide/hijab2.jpg" alt="Chicago">
-        </div>
-        <div class="item">
-          <img src="<?= base_url() ?>asset/foto_slide/hijab3.jpg" alt="New York">
-        </div>
-      </div>
-    </div>
-    <!-- END SLIDE -->
     <!-- KATEGORI -->
     <div class="row pb-1 my-3">
         <?php foreach($kategori as $row) { ?>
         <div class="col-2">
             <div class="card">
                 <div class="card-body">
-                    <a href="/produk/kategori/<?= $row->id_kategori_produk ?>"><?= $row->nama_kategori ?></a>
+                    <a href="<?= $row->id_kategori_produk ?>"><?= $row->nama_kategori ?></a>
                 </div>
             </div>
         </div>
         <?php } ?>
     </div>
     <!-- END KATEGORI -->
-    <!-- PRODUK TERLARIS -->
-    <div class="row"><h2 class="fw-bold text-center">PRODUK TERLARIS</h2></div>
-    <div class="row">
-        <div id="produk-slide" class="owl-carousel owl-theme">
-            <?php foreach($produk_new as $row) { ?>
-            <div class="card p-1 mr-1">
-                <a href="<?= base_url("produk/detail/$row->produk_seo") ?>">
-                    <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img-top" alt="...">
-                </a>
-                <div class="card-body p-0 m-1">
-                    <p class="card-title" style="font-size:12px;">Rp.<?= rupiah($row->harga_konsumen) ?></p>
-                    <a href="<?= base_url("produk/detail/$row->produk_seo") ?>" style="text-decoration: none;"><h5 class="card-text lh-sm caption-pb "><?= $row->nama_produk ?></h5></a>
-                </div>
-            </div>
-            <?php } ?>
-        </div>
-    </div>
-    <!-- END PRODUK TERLARIS -->
     <!-- KONTEN -->
     <section id="konten" class="border-bottom pb-3 border-dark-subtle">
         <div class="row bg-primary align-items-center ps-2 py-2 my-2">
@@ -140,56 +121,12 @@
 <script src="https://unpkg.com/infinite-scroll@4.0.1/dist/infinite-scroll.pkgd.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#head-slide").owlCarousel({
-          items:1,
-          navText: false,
-          dots:false,
-            loop:true,
-            smartSpeed: 500,
-            autoplay: true,
-            autoplayTimeout: 4000,
-            autoplaySpeed: 500,
-        });
-
-        $("#produk-slide").owlCarousel({
-          dots:false,
-          autoplay:true,
-          autoplaySpeed: 250,
-          autoplayTimeout:2000,
-          smartSpeed:250,
-          loop:true,
-          center:true,
-          responsiveClass:true,
-          responsive: {
-            0:{
-              items:3
-            },
-            480:{
-              items:5
-            },
-            768:{
-              items:7
-            },
-            1024:{
-              items:9
-            },
-          }
-        });
-
-        // $(".pagination__next").on("click", function(){
-        //   $.ajax({
-        //     url: "<?= base_url('tes/2') ?>",
-        //     type : 'get',
-        //     success: function(data){
-        //       $("#post-infscroll>.col:last").after(data).show().fadeIn("slow");
-        //     },
-        //   });
-        // });
-
         let $maininfscroll = $('#post-infscroll').infiniteScroll({
               // options
               path: function(){
-                return `tes/${this.loadCount + 1}`;
+                console.log("page index :"+this.pageIndex);
+                console.log("load count :"+this.loadCount);
+                return `<?= base_url() ?>tes/${this.loadCount + 1}/<?= $id_kategori ?>`;
               },
               append: false,
               history: false,
@@ -204,8 +141,10 @@
             // compile body data into HTML
           let itemsHTML = body.map( getItemHTML ).join('');
           itemsHTML = '<div class="row row-cols-3 row-cols-md-5 p-0 m-0">' + itemsHTML + '</div>';
+          console.log(itemsHTML);
           // convert HTML string into elements
           let $items =  $( itemsHTML );
+          console.log($items);
           // append item elements
           $maininfscroll.infiniteScroll( 'appendItems', $items );
         });
