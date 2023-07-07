@@ -52,12 +52,13 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->get('tambah_produk', [Administrator::class, 'tambah_produk']);
     $routes->post('proses_tambah_produk', [Administrator::class, 'proses_produk']);
     $routes->post('proses_edit_produk', [Administrator::class, 'proses_produk']);
-    $routes->get('edit_produk/(:num)', [Administrator::class, 'edit_produk']);
+    $routes->get('edit_produk/(:num)', [Administrator::class, 'edit_produk/$1']);
     $routes->get('delete_produk/(:num)', [Administrator::class, 'delete_produk/$1']);
     $routes->get('kategori', [Administrator::class, 'kategori']);
     $routes->get('tambah_kategori', [Administrator::class, 'tambah_kategori']);
     $routes->post('proses_tambah_kategori', [Administrator::class, 'proses_tambah_kategori']);
     $routes->get('edit_kategori/(:num)', [Administrator::class, 'edit_kategori/$1']);
+    $routes->post('proses_edit_kategori', [Administrator::class, 'proses_kategori']);
     $routes->get('delete_kategori/$1', [Administrator::class, 'delete_kategori/$1']);
     $routes->get('transaksi', [Administrator::class, 'transaksi']);
     $routes->post('ajaxpn', [Administrator::class, 'getProdukName'], ['as' => 'produk.nama']);
@@ -65,6 +66,7 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->post('ajdt/(:segment)/(:segment)', [Administrator::class, 'ajaxDatatables']);
     $routes->get('stok', [Administrator::class, 'stok']);
     $routes->get('(:segment)', [Administrator::class, 'direct']);
+    $routes->get('tes', [Administrator::class, 'admin_tes']);
 });
 
 use App\Controllers\Pages;

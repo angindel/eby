@@ -34,10 +34,17 @@
                       <tr>
                         <td><?= $no ?></td>
                         <td><?= $row->nama_kategori ?></td>
+                        <?php if (is_null($row->gambar)): ?>
                         <td class="p-0"><center><i class="fa-solid fa-image fa-5x"></i></center></td>
                         <td>
+                        <?php else: ?>
+                          <td class="p-0"><center>
+                            <img src="<?= base_url("uploads/kategori/$row->gambar") ?>" class="img-thumbnail">
+                          </center></td>
+                          <td>
+                        <?php endif ?>
                           <center>
-                            <a class="btn btn-success btn-xs" title="Edit Data" href="<?= base_url("administrator/edit_produk/$row->id_kategori_produk") ?>">
+                            <a class="btn btn-success btn-xs" title="Edit Data" href="<?= base_url("administrator/edit_kategori/$row->id_kategori_produk") ?>">
                               <i class='fa fa-edit fa-xl'></i>
                             </a>
                             <a class='btn btn-danger btn-xs' title='Delete Data' href="<?= base_url("administrator/delete_produk/$row->id_kategori_produk") ?>" ><i class='fa fa-remove fa-xl'></i></a>

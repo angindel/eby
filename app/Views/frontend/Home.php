@@ -51,18 +51,73 @@
       </div>
     </div>
     <!-- END SLIDE -->
+
+    <!-- TES KATEGORI -->
+    <section style="margin-bottom: 20px;">
+     <div class="row bg-primary align-items-center ps-2 py-2 my-2">
+            <div class="col-8 m-0 p-0 justify-content-start">
+                <h2 class="align-items-stretch m-0 p-0 fw-bold">KATEGORI</h2>
+            </div>
+            <div class="col-4 text-end m-0 p-0">
+                <a href="#" class="btn btn-primary btn-sm btn-lc me-2" title="Produk Terbaru" rel="category">SEMUA</a>
+            </div>
+        </div>
+    <div id="teskat" class="owl-carousel owl-theme">
+        <?php 
+        $tk = count($kategori);
+        for($x=0; $x < $tk;)
+        {
+            echo '<div class="item">';
+                for($i=0;$i < 2; $i++, $x++)
+                {
+        ?>
+                    <div class="katkat">
+                                <img src="<?php echo 'uploads/kategori/'.$kategori[$x]->gambar; ?>">
+                                <p><?php echo $kategori[$x]->nama_kategori ?></p>
+                    </div>
+        <?php                    
+                }
+            echo '</div>';
+        }
+        ?>
+    </div>
+    </section>
+
+    <!-- END TES KATEGORI -->
+
     <!-- KATEGORI -->
-    <div class="row pb-1 my-3">
+    <!-- <section id="kategori" class="border-bottom pb-3 border-dark-subtle">
+        <div class="row bg-primary align-items-center ps-2 py-2 my-2">
+            <div class="col-8 m-0 p-0 justify-content-start">
+                <h2 class="align-items-stretch m-0 p-0 fw-bold">KATEGORI</h2>
+            </div>
+            <div class="col-4 text-end m-0 p-0">
+                <a href="#" class="btn btn-primary btn-sm btn-lc me-2" title="Produk Terbaru" rel="category">SEMUA</a>
+            </div>
+        </div>
+    <div class="row pb-1 my-3 kategori-item">
         <?php foreach($kategori as $row) { ?>
-        <div class="col-2">
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 col-xxl-1 my-1 ic">
+            <a href="/produk/kategori/<?= $row->id_kategori_produk ?>" style="text-decoration: none;">
             <div class="card">
                 <div class="card-body">
-                    <a href="/produk/kategori/<?= $row->id_kategori_produk ?>"><?= $row->nama_kategori ?></a>
+                        <?php if(is_null($row->gambar)) : ?>
+                            <img src="<?= base_url("asset/img/file-image-regular.svg") ?>" class="w-100 h-100">
+                        <?php else : ?>
+                            <img src="<?= base_url("uploads/kategori/$row->gambar") ?>" class="w-100 h-100">
+                        <?php endif ?>
+                </div>
+                <div class="card-footer">
+                    <div class="text-center">
+                            <?= $row->nama_kategori ?>
+                        </div>
                 </div>
             </div>
+            </a>
         </div>
         <?php } ?>
     </div>
+    </section> -->
     <!-- END KATEGORI -->
     <!-- PRODUK TERLARIS -->
     <div class="row"><h2 class="fw-bold text-center">PRODUK TERLARIS</h2></div>
@@ -135,11 +190,35 @@
       </div>
     </div>
 </main>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="<?= base_url("owlcarousel/dist/owl.carousel.min.js") ?>"></script>
 <script src="https://unpkg.com/infinite-scroll@4.0.1/dist/infinite-scroll.pkgd.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $('#teskat').owlCarousel({
+    loop:false,
+    margin:5,
+    items:1,
+    nav: true,
+    responsiveClass:true,
+          responsive: {
+            0:{
+              items: 5
+            },
+            480:{
+              items:6
+            },
+            670 :{
+                items: 8
+            },
+            768:{
+              items:10
+            },
+            1024:{
+              items:16
+            },
+          }
+});
         $("#head-slide").owlCarousel({
           items:1,
           navText: false,
@@ -175,6 +254,7 @@
             },
           }
         });
+
 
         // $(".pagination__next").on("click", function(){
         //   $.ajax({

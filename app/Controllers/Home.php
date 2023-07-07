@@ -24,7 +24,7 @@ class Home extends BaseController
         $m_produk = new MProduks();
         $m_katpro = new MKategoriProduk();
         $this->web['kategori'] = $m_katpro->findAll();
-        $this->web['produk_new'] = $m_produk->orderBy('created_at', 'DESC')->limit(4)->find();
+        $this->web['produk_new'] = $m_produk->orderBy('created_at', 'DESC')->limit(9)->find();
         $this->web['produk'] = $m_produk->paginate(12, 'produk');
         $this->web['pager'] = $m_produk->pager;
         return view('frontend/Home', $this->web);

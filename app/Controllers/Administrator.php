@@ -187,6 +187,49 @@ class Administrator extends BaseController
 
     }
 
+    public function edit_kategori($id)
+    {
+        helper('form');
+        $data['edit'] = $this->m_katpro->where('id_kategori_produk', $id)->first();
+        $data['title'] = 'edit_kategori';
+        return view('backend/Edit_kategori', $data);
+    }
+
+    public function proses_kategori()
+    {
+     helper('local');
+     $img = $this->request->getFile('gambar');
+     $dvalid = [
+        'nama_kategori' => ['rules' => 'required','errors' => ['required' => 'Nama Kategori Harus di isi']],
+        ];
+        if( !empty($img->getName()) )
+        {
+            $dvalid['gambar'] = ['rules' => 'uploaded[gambar]','is_image[gambar]','mime_in[gambar,image/jpg,image/jpeg,image/png,image/webp]','errors' => ['required' => 'Gambar Harus Di Input']];
+        }
+     if( !$this->validate($dvalid) )
+        {
+            session()->setFlashdata('error', $this->validator->listErrors());
+            return redirect()->back()->withInput();
+        }
+        $dr = $this->request->getVar();
+
+        $data = [
+            'nama_kategori' => $dr['nama_kategori'],
+        ];
+        if( !empty($img->getName()) )
+        {
+            $fileName = $img->getRandomName();
+            $data['gambar'] = $fileName;
+            $img->move(WRITEPATH . 'uploads/kategori/', $fileName);
+        }
+
+
+        $this->m_katpro->update($dr['id'], $data);
+        session()->setFlashdata('msg', 'Edit Data Kategori Berhasil');
+
+        return redirect()->to(base_url('administrator/kategori'));
+    }
+
     public function tambah_kategori()
     {
         $data['title'] = 'tambah_kategori';
@@ -464,6 +507,11 @@ class Administrator extends BaseController
     public function direct()
     {
         return redirect()->to('administrator');
+    }
+
+    public function admin_tes($d)
+    {
+        d($d);
     }
 
 }
