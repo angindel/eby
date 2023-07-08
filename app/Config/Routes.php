@@ -47,7 +47,6 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->get('dashboard', [Administrator::class, 'dashboard']);
     $routes->get('identitas', [Administrator::class, 'identitas'], ['as' => 'admin.identitas']);
     $routes->post('identitas/proses_edit_identitas', [Administrator::class, 'edit_identitas'], ['as' => 'admin.identitas.edit']);
-    $routes->get('website/payment-channel', [Administrator::class, 'website_payment_channel'], ['as' => 'admin.website.payment-channel']);
     $routes->get('produk', [Administrator::class, 'produk']);
     $routes->get('tambah_produk', [Administrator::class, 'tambah_produk']);
     $routes->post('proses_tambah_produk', [Administrator::class, 'proses_produk']);
@@ -65,8 +64,15 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->post('ajdt/(:segment)', [Administrator::class, 'ajaxDatatables']);
     $routes->post('ajdt/(:segment)/(:segment)', [Administrator::class, 'ajaxDatatables']);
     $routes->get('stok', [Administrator::class, 'stok']);
-    $routes->get('(:segment)', [Administrator::class, 'direct']);
     $routes->get('tes', [Administrator::class, 'admin_tes']);
+    $routes->group('payment_channel', ['namespace' => 'App\Controllers\Admin', 'filter' => 'adminFilter'], static function ($routes){
+        $routes->get('/', 'PaymentChannel::index', ['as' => 'admin.website.payment-channel']);
+        $routes->get('tambah', 'PaymentChannel::tambah');
+        $routes->post('proses_tambah', 'PaymentChannel::proses_tambah');
+        $routes->get('edit/(:num)', 'PaymentChannel::edit/$1');
+        $routes->post('proses_edit', 'PaymentChannel::proses_edit');
+    });
+    $routes->get('(:segment)', [Administrator::class, 'direct']);
 });
 
 use App\Controllers\Pages;

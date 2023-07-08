@@ -68,14 +68,20 @@
         for($x=0; $x < $tk;)
         {
             echo '<div class="item">';
-                for($i=0;$i < 2; $i++, $x++)
+                for($i=0;$i < 2; $i++)
                 {
+                    if(!isset($kategori[$x]))
+                    {
+                        break;
+                    } else {
         ?>
                     <div class="katkat">
                                 <img src="<?php echo 'uploads/kategori/'.$kategori[$x]->gambar; ?>">
                                 <p><?php echo $kategori[$x]->nama_kategori ?></p>
                     </div>
-        <?php                    
+        <?php
+                        $x++;
+                    }     
                 }
             echo '</div>';
         }
@@ -171,13 +177,11 @@
       <div class="col-md-12 col-lg-6 border border-top-0 border-dark-subtle my-2">
           <div class="row">
               <div class="col-12">PAYMENT CHANNEL</div>
-              <div class="col-2">BCA</div>
-              <div class="col-2">MANDIRI</div>
-              <div class="col-2">BRI</div>
-              <div class="col-2">BNI</div>
-              <div class="col-2">OVO</div>
-              <div class="col-2">GOPAY</div>
-              <div class="col-2">DANA</div>
+              <?php foreach($pc as $row) { ?>
+              <div class="col-2">
+                <img src="<?= base_url("uploads/payment_channel/$row->gambar") ?>" class="img-thumbnail">
+              </div>
+              <?php } ?>
           </div>
       </div>
       <div class="col-md-12 col-lg-6 border border-top-0 border-dark-subtle my-2">

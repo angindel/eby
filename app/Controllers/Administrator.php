@@ -232,6 +232,7 @@ class Administrator extends BaseController
 
     public function tambah_kategori()
     {
+        helper('form');
         $data['title'] = 'tambah_kategori';
         return view('backend/Tambah_kategori', $data);
     }
@@ -251,10 +252,26 @@ class Administrator extends BaseController
             session()->setFlashdata('error', $this->validator->listErrors());
             return redirect()->back()->withInput();
         }
-        $this->m_katpro->insert([
+        $img = $this->request->getFile('gambar');
+
+        $data = [
             'nama_kategori' => $this->request->getVar('nama_kategori'),
             'kategori_seo' => seo_title($this->request->getVar('nama_kategori'))
-        ]);
+        ];
+
+        if( !empty($img->getName()) )
+        {
+            $fileName = $img->getRandomName();
+            $data['gambar'] = $fileName;
+            $img->move(WRITEPATH . 'uploads/kategori/', $fileName);
+        }
+        else
+        {
+            $data['gambar'] = NULL;
+        }
+
+
+        $this->m_katpro->insert($data);
         session()->setFlashdata('msg', 'Tambah Data Kategori Berhasil');
         return redirect()->to(base_url('administrator/kategori'));
     }

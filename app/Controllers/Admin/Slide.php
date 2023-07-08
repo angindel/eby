@@ -4,21 +4,20 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use CodeIgniter\Controller;
-use App\Models\MPaymentChannel;
+use App\Models\MDeliveryService;
 
-
-class PaymentChannel extends BaseController {
-
-    protected $m_pc;
+class Slide extends BaseController
+{
+    protected $m_ds;
 
     public function __construct()
     {
-        $this->m_pc = new MPaymentChannel();
+        $this->m_ds = new MDeliveryService();
     }
 
     public function index()
     {
-        $data['payment_channel'] = $this->m_pc->findAll();
+        $data['payment_channel'] = $this->m_ds->findAll();
         $data['title'] = 'PaymentChannel';
         return view('backend/website/PaymentChannel', $data);
 
@@ -27,7 +26,7 @@ class PaymentChannel extends BaseController {
     public function edit($id)
     {
         helper('form');
-        $data['edit'] = $this->m_pc->where('id', $id)->first();
+        $data['edit'] = $this->m_ds->where('id', $id)->first();
         $data['title'] = 'edit_kategori';
         return view('backend/website/Edit_PaymentChannel', $data);
     }
@@ -61,7 +60,7 @@ class PaymentChannel extends BaseController {
         }
 
 
-        $this->m_pc->update($dr['id'], $data);
+        $this->m_ds->update($dr['id'], $data);
         session()->setFlashdata('msg', 'Edit Data Payment Channel Berhasil');
 
         return redirect()->to(base_url('administrator/payment_channel'));
@@ -105,7 +104,7 @@ class PaymentChannel extends BaseController {
         }
 
 
-        $this->m_pc->insert($data);
+        $this->m_ds->insert($data);
         session()->setFlashdata('msg', 'Tambah Data Payment Channel Berhasil');
         return redirect()->to(base_url('administrator/payment_channel'));
     }

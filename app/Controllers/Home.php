@@ -6,6 +6,7 @@ use App\Models\MProduks;
 use App\Models\MKategoriProduk;
 use App\Models\MIdentitas;
 use App\Models\MLogo;
+use App\Models\MPaymentChannel;
 
 class Home extends BaseController
 {
@@ -21,12 +22,12 @@ class Home extends BaseController
 
     public function index()
     {
+        $m_pc = new MPaymentChannel();
         $m_produk = new MProduks();
         $m_katpro = new MKategoriProduk();
         $this->web['kategori'] = $m_katpro->findAll();
         $this->web['produk_new'] = $m_produk->orderBy('created_at', 'DESC')->limit(9)->find();
-        $this->web['produk'] = $m_produk->paginate(12, 'produk');
-        $this->web['pager'] = $m_produk->pager;
+        $this->web['pc'] = $m_pc->findAll();
         return view('frontend/Home', $this->web);
     }
     

@@ -6,18 +6,18 @@
       <div class="container">
           <div class="card">
               <div class="card-header">
-                  <h3>Tambah Kategori</h3>
+                  <h3>Tambah Payment Channel</h3>
               </div>
               <div class="card-body">
-                <?= form_open_multipart('administrator/proses_tambah_kategori') ?>
+                <?= form_open_multipart('administrator/payment_channel/proses_tambah') ?>
 
                       <div class="form-group">
-                          <label for="nama_kategori">Nama Kategori</label>
-                          <?php if(empty($ds['nama_kategori']) ) : ?>
-                          <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" value="<?= old('nama_kategori') ?>">
+                          <label for="nama_kategori">Nama Payment Channel</label>
+                          <?php if(empty($ds['nama']) ) : ?>
+                          <input type="text" class="form-control" id="nama" name="nama" value="<?= old('nama') ?>">
                           <?php else: ?>
-                          <input type="text" class="form-control is-invalid" id="nama_kategori" name="nama_kategori" value="<?= old('nama_kategori') ?>">
-                          <div id="nama_kategori" class="invalid-feedback"><?= $ds['nama_kategori'] ?></div>
+                          <input type="text" class="form-control is-invalid" id="nama" name="nama" value="<?= old('nama') ?>">
+                          <div id="nama" class="invalid-feedback"><?= $ds['nama'] ?></div>
                           <?php endif; ?>
                       </div>
 
