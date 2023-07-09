@@ -9,35 +9,44 @@ use App\Models\MPaymentChannel;
 
 class PaymentChannel extends BaseController {
 
-    protected $m_pc;
+    protected $m;
+    protected $data = [];
 
     public function __construct()
     {
-        $this->m_pc = new MPaymentChannel();
+        $this->m = new MPaymentChannel();
+        $this->data['title'] = 'Administrator - Payment Channel';
+        $this->data['box_title'] = 'Payment Channel';
+        $this->data['url_web'] = 'payment_channel';
     }
 
     public function index()
     {
-        $data['payment_channel'] = $this->m_pc->findAll();
-        $data['title'] = 'PaymentChannel';
-        return view('backend/website/PaymentChannel', $data);
-
+        $this->data['data'] = $this->m->findAll();
+        return view('backend/website/m_aio', $this->data);
     }
 
     public function edit($id)
     {
         helper('form');
-        $data['edit'] = $this->m_pc->where('id', $id)->first();
+        $data['edit'] = $this->m->where('id', $id)->first();
         $data['title'] = 'edit_kategori';
         return view('backend/website/Edit_PaymentChannel', $data);
     }
 
     public function proses_edit()
     {
-     helper('local');
-     $img = $this->request->getFile('gambar');
-     $dvalid = [
-        'nama' => ['rules' => 'required','errors' => ['required' => 'Nama Payment Channel Harus di isi']],
+        helper('local');
+        $img = $this->request->getFile('gambar');
+        
+        // Membuat aturan request data nama
+        $data_validasi = [
+            "nama" => [
+                "rules" => "required",
+                "errors" => [
+                    "required" => "Nama {$this->data['box_title']} Harus di isi"
+                ]
+            ],
         ];
         if( !empty($img->getName()) )
         {
@@ -61,7 +70,7 @@ class PaymentChannel extends BaseController {
         }
 
 
-        $this->m_pc->update($dr['id'], $data);
+        $this->m->update($dr['id'], $data);
         session()->setFlashdata('msg', 'Edit Data Payment Channel Berhasil');
 
         return redirect()->to(base_url('administrator/payment_channel'));
@@ -70,44 +79,57 @@ class PaymentChannel extends BaseController {
     public function tambah()
     {
         helper('form');
-        $data['title'] = 'tambah_payment_channel';
-        return view('backend/website/Tambah_PaymentChannel', $data);
+        $this->data['title'] = 'Administrator - Tambah Payment Channel';
+        return view('backend/website/t_aio', $this->data);
     }
 
     public function proses_tambah()
     {
-        helper('local');
-        if( !$this->validate([
-            'nama' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Nama Kategori Harus di isi'
+        helper('local'); // Panggil helper local
+
+        // Membuat aturan request data nama
+        $data_validasi = [
+            "nama" => [
+                "rules" => "required",
+                "errors" => [
+                    "required" => "Nama {$this->data['box_title']} Harus di isi"
                 ]
-            ]
-        ]) )
+            ],
+        ];
+
+        // Memvalidasi $data_validasi
+        if( !$this->validate($data_validasi) )
         {
             session()->setFlashdata('error', $this->validator->listErrors());
             return redirect()->back()->withInput();
         }
+
+        // Inisialiasi data gambar ke $img
         $img = $this->request->getFile('gambar');
 
+        // Inisialisasi data nama ke $data['nama']
         $data['nama'] = $this->request->getVar('nama');
 
+        // Memvalidasi jika tidak ada gambar
         if( !empty($img->getName()) )
         {
             $fileName = $img->getRandomName();
             $data['gambar'] = $fileName;
-            $img->move(WRITEPATH . 'uploads/payment_channel/', $fileName);
+            $img->move(WRITEPATH . "uploads/{$this->data['url_web']}/", $fileName);
         }
         else
         {
             $data['gambar'] = NULL;
         }
 
+        // Masuksan data ke dalam database
+        $this->m->insert($data);
 
-        $this->m_pc->insert($data);
-        session()->setFlashdata('msg', 'Tambah Data Payment Channel Berhasil');
-        return redirect()->to(base_url('administrator/payment_channel'));
+        // Buat Pesan tambah data berhasil
+        session()->setFlashdata("msg", "Tambah Data {$this->data['box_title']} Berhasil");
+
+        // Redirect ke menu semua data
+        return redirect()->to(base_url("administrator/{$this->data['url_web']}"));
     }
 
     public function delete($id)

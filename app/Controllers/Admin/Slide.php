@@ -18,8 +18,8 @@ class Slide extends BaseController
     public function index()
     {
         $data['payment_channel'] = $this->m_ds->findAll();
-        $data['title'] = 'PaymentChannel';
-        return view('backend/website/PaymentChannel', $data);
+        $data['box-title'] = 'PaymentChannel';
+        return view('backend/website/m_aio', $data);
 
     }
 

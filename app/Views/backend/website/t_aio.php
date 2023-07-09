@@ -9,10 +9,10 @@
                   <h3>Tambah Payment Channel</h3>
               </div>
               <div class="card-body">
-                <?= form_open_multipart('administrator/payment_channel/proses_tambah') ?>
+                <?= form_open_multipart("administrator/{$url_web}/proses_tambah") ?>
 
                       <div class="form-group">
-                          <label for="nama_kategori">Nama Payment Channel</label>
+                          <label for="nama_kategori">Nama <?= $box_title ?></label>
                           <?php if(empty($ds['nama']) ) : ?>
                           <input type="text" class="form-control" id="nama" name="nama" value="<?= old('nama') ?>">
                           <?php else: ?>

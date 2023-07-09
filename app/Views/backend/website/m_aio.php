@@ -14,15 +14,15 @@
                       </button>
                   </div>
                   <?php endif; ?>
-                  <h3 class="box-title">Semua Payment Channel</h3>
-                  <a class='pull-right btn btn-primary btn-sm' href='<?php echo base_url(); ?>administrator/payment_channel/tambah'>Tambahkan Data</a>
+                  <h3 class="box-title">Semua <?= $box_title ?></h3>
+                  <a class='pull-right btn btn-primary btn-sm' href='<?= base_url("administrator/{$url_web}/tambah") ?>'>Tambahkan Data</a>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example" class="table table-bordered table-striped table-condensed" style="width: 100%">
                     <thead>
                       <tr>
                         <th style='width:30px'>No</th>
-                        <th>Nama Payment Channel</th>
+                        <th>Nama <?= $box_title ?></th>
                         <th style='width:140px'>Gambar</th>
                         <th style='width:100px'>Action</th>
                       </tr>
@@ -30,7 +30,7 @@
                     <tbody>
                   <?php 
                     $no = 1;
-                    foreach ($payment_channel as $row){ ?>
+                    foreach ($data as $row){ ?>
                       <tr>
                         <td><?= $no ?></td>
                         <td><?= $row->nama ?></td>
@@ -43,16 +43,16 @@
                         <?php else: ?>
                           <td class="p-0">
                             <center>
-                              <img src="<?= base_url("uploads/payment_channel/$row->gambar") ?>" class="img-thumbnail">
+                              <img src="<?= base_url("uploads/{$url_web}/$row->gambar") ?>" class="img-thumbnail">
                             </center>
                           </td>
                         <?php endif ?>
                           <td>
                           <center>
-                            <a class="btn btn-success btn-xs" title="Edit Data" href="<?= base_url("administrator/payment_channel/edit/$row->id") ?>">
+                            <a class="btn btn-success btn-xs" title="Edit Data" href="<?= base_url("administrator/{$url_web}/edit/$row->id") ?>">
                               <i class='fa fa-edit fa-xl'></i>
                             </a>
-                            <a class='btn btn-danger btn-xs' title='Delete Data' href="<?= base_url("administrator/payment_channel/delete/$row->id") ?>" ><i class='fa fa-remove fa-xl'></i></a>
+                            <a class='btn btn-danger btn-xs' title='Delete Data' href="<?= base_url("administrator/{$url_web}/delete/$row->id") ?>" ><i class='fa fa-remove fa-xl'></i></a>
                           </center>
                         </td>
                       </tr>
