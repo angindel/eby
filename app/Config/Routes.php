@@ -65,12 +65,12 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->post('ajdt/(:segment)/(:segment)', [Administrator::class, 'ajaxDatatables']);
     $routes->get('stok', [Administrator::class, 'stok']);
     $routes->get('tes', [Administrator::class, 'admin_tes']);
-    $routes->group('payment_channel', ['namespace' => 'App\Controllers\Admin', 'filter' => 'adminFilter'], static function ($routes){
-        $routes->get('/', 'PaymentChannel::index', ['as' => 'admin.website.payment-channel']);
-        $routes->get('tambah', 'PaymentChannel::tambah');
-        $routes->post('proses_tambah', 'PaymentChannel::proses_tambah');
-        $routes->get('edit/(:num)', 'PaymentChannel::edit/$1');
-        $routes->post('proses_edit', 'PaymentChannel::proses_edit');
+    $routes->group('aio', ['namespace' => 'App\Controllers\Admin', 'filter' => 'adminFilter'], static function ($routes){
+        $routes->get('(:segment)', 'Aio::index/$1');
+        $routes->get('(:segment)/tambah', 'Aio::tambah/$1/$2');
+        $routes->post('(:segment)/proses_tambah', 'Aio::proses_tambah/$1');
+        $routes->get('(:segment)/edit/(:num)', 'Aio::edit/$1/$2');
+        $routes->post('(:segment)/proses_edit', 'Aio::proses_edit/$1');
     });
     $routes->get('(:segment)', [Administrator::class, 'direct']);
 });

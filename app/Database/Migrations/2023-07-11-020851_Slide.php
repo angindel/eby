@@ -4,24 +4,20 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class KategoriProduk extends Migration
+class Slide extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'id_kategori_produk' => [
+            'id' => [
                 'type' => 'INT',
                 'constraint' => '11',
                 'unsigned' => true,
                 'auto_increment' => true
             ],
-            'nama_kategori' => [
+            'nama' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-            ],
-            'kategori_seo' => [
-                'type' => 'VARCHAR',
-                'constraint' => '255'
             ],
             'gambar' => [
                 'type' => 'VARCHAR',
@@ -30,12 +26,12 @@ class KategoriProduk extends Migration
             ]
         ]);
 
-        $this->forge->addPrimaryKey('id_kategori_produk');
-        $this->forge->createTable('kategori_produk');
+        $this->forge->addPrimaryKey('id');
+        $this->forge->createTable('slide');
     }
 
     public function down()
     {
-        $this->forge->dropTable('kategori_produk');
+        $this->forge->dropTable('slide');
     }
 }

@@ -21,7 +21,8 @@ class PaymentChannel extends Migration
             ],
             'gambar' => [
                 'type' => 'VARCHAR',
-                'constraint' => '255'
+                'constraint' => '255',
+                'null' => true
             ]
         ]);
 

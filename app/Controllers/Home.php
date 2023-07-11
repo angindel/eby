@@ -7,6 +7,8 @@ use App\Models\MKategoriProduk;
 use App\Models\MIdentitas;
 use App\Models\MLogo;
 use App\Models\MPaymentChannel;
+use App\Models\MDeliveryService;
+use App\Models\MSlide;
 
 class Home extends BaseController
 {
@@ -25,9 +27,17 @@ class Home extends BaseController
         $m_pc = new MPaymentChannel();
         $m_produk = new MProduks();
         $m_katpro = new MKategoriProduk();
+        $m_ds = new MDeliveryService();
+        $m_sl = new MSlide();
         $this->web['kategori'] = $m_katpro->findAll();
-        $this->web['produk_new'] = $m_produk->orderBy('created_at', 'DESC')->limit(9)->find();
+        //$this->web['produk_new'] = $m_produk->orderBy('created_at', 'DESC')->limit(9)->find();
+        $db = db_connect();
+        $q = $db->query('select m.id_mtran, m.id_produk, p.nama_produk, p.produk_seo, p.gambar, p.harga_konsumen, sum(m.qty) as qty from mtran as m inner join produk as p on m.id_produk=p.id_produk group by p.nama_produk order by qty desc limit 9');
+        $this->web['produk_new'] = $q->getResult();
+        $db->close();
         $this->web['pc'] = $m_pc->findAll();
+        $this->web['ds'] = $m_ds->findAll();
+        $this->web['sl'] = $m_sl->findAll();
         return view('frontend/Home', $this->web);
     }
     

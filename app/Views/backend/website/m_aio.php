@@ -2,6 +2,21 @@
 <?= $this->section('content') ?>
     <!-- Main content -->
     <section class="content">
+      <section class="content-header m-0 pt-1">
+         <div class="container-fluid">
+             <div class="row mb-2">
+                 <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-left">
+                         <li class="breadcrumb-item"><a href="<?= base_url("{$l[0]}") ?>">Home</a>
+                         </li>
+                         <li class="breadcrumb-item active">
+                          <?= $box_title ?>
+                         </li>
+                     </ol>
+                 </div>
+             </div>
+         </div>
+      </section>
       <div class="container-fluid">
             <div class="col-xs-12">  
               <div class="box">
@@ -14,8 +29,7 @@
                       </button>
                   </div>
                   <?php endif; ?>
-                  <h3 class="box-title">Semua <?= $box_title ?></h3>
-                  <a class='pull-right btn btn-primary btn-sm' href='<?= base_url("administrator/{$url_web}/tambah") ?>'>Tambahkan Data</a>
+                  <a class='pull-right btn btn-primary btn-sm' href='<?= base_url("administrator/aio/{$url_web}/tambah") ?>'>Tambahkan Data</a>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example" class="table table-bordered table-striped table-condensed" style="width: 100%">
@@ -49,10 +63,10 @@
                         <?php endif ?>
                           <td>
                           <center>
-                            <a class="btn btn-success btn-xs" title="Edit Data" href="<?= base_url("administrator/{$url_web}/edit/$row->id") ?>">
+                            <a class="btn btn-success btn-xs" title="Edit Data" href="<?= base_url("administrator/aio/{$url_web}/edit/$row->id") ?>">
                               <i class='fa fa-edit fa-xl'></i>
                             </a>
-                            <a class='btn btn-danger btn-xs' title='Delete Data' href="<?= base_url("administrator/{$url_web}/delete/$row->id") ?>" ><i class='fa fa-remove fa-xl'></i></a>
+                            <a class='btn btn-danger btn-xs' title='Delete Data' href="<?= base_url("administrator/aio/{$url_web}/delete/$row->id") ?>" ><i class='fa fa-remove fa-xl'></i></a>
                           </center>
                         </td>
                       </tr>

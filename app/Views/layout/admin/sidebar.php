@@ -93,21 +93,21 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="<?= route_to('admin.website.payment-channel') ?>" class="nav-link">
+            <a href="<?= base_url("administrator/aio/payment_channel") ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Payment Channel</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="pages/examples/contacts.html" class="nav-link">
+            <a href="<?= base_url("administrator/aio/delivery_service") ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Delivery Service</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="pages/examples/contacts.html" class="nav-link">
+            <a href="<?= base_url("administrator/aio/slide") ?>" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Contacts</p>
+                <p>Slide</p>
             </a>
         </li>
         <li class="nav-item">
