@@ -5,7 +5,8 @@
     <?= $this->include('assets/local/bs_css-5.3.0') ?>
     <?= $this->include('assets/local/style-local') ?>
     <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.carousel.min.css") ?>">
-<link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.theme.default.min.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.theme.default.min.css") ?>">
+    <?= $this->include('assets/local/fa-6.4.0') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('cdn-foot') ?>

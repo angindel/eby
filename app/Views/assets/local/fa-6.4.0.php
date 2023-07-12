@@ -1,0 +1,1 @@
+<link rel="stylesheet" type="text/css" href="<?= base_url("asset/fa-free-6.4.0-web/css/all.min.css") ?>">
