@@ -12,7 +12,7 @@ $ds = session()->getFlashdata('_ci_validation_errors');
                   <h3>Edit Produk</h3>
               </div>
               <div class="card-body">
-                  <?= form_open_multipart('administrator/proses_edit_produk') ?>
+                  <?= form_open_multipart('administrator/produk/proses_edit') ?>
                       <?= csrf_field(); ?>
                       <input type="hidden" name="edit">
                       <input type="hidden" name="id" value="<?= $edit->id_produk ?>">

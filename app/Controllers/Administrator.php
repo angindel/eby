@@ -96,6 +96,7 @@ class Administrator extends BaseController
     public function produk()
     {
         $data['produk'] = $this->m_produk->orderBy('id_produk', 'DESC')->findAll();
+        $data['kategori_produk'] = $this->m_katpro->orderBy('id_kategori_produk', 'DESC')->findAll();
         $data['title'] = 'Produk';
         $data['path'] = end($this->data['path']);
         return view('backend/Produk', $data);
@@ -381,6 +382,42 @@ class Administrator extends BaseController
             $allowedFields = ['id_produk','nama','stok_awal','stok_akhir'];
             $dt = new MDatatables($table, $column_order, $column_search, $order, $primaryKey, $allowedFields);
             $ts = ['id_stok', 'nama', 'stok_awal','stok_akhir'];
+            if(!is_null($s2))
+            {
+                $response = array();
+                if($this->crud_datatables($s2, $rq, $dt))
+                {
+                    $response['token'] = csrf_hash();
+                    return $this->response->setJSON($response);
+                }
+                else
+                {
+                    json_encode(['code' => 1, 'msg' => 'ADO YANG SALAH CAKNYO']);
+                }
+            }
+        }
+        else if ($s1 == 'produk')
+        {
+            $table = $s1;
+            $column_order = ['id_produk', 'nama_produk'];
+            $column_search = ['nama_produk'];
+            $order = ['id_produk', 'DESC'];
+            $primaryKey = 'id_produk';
+            $allowedFields = [
+                'nama_produk',
+                'produk_seo',
+                'satuan',
+                'harga_beli',
+                'harga_konsumen',
+                'harga_reseller',
+                'berat',
+                'diskon',
+                'gambar',
+                'keterangan',
+                'created_at'
+            ];
+            $dt = new MDatatables($table, $column_order, $column_search, $order, $primaryKey, $allowedFields);
+            $ts = ['id_produk', 'nama_produk', 'harga_beli','harga_reseller','harga_konsumen','satuan','berat'];
             if(!is_null($s2))
             {
                 $response = array();

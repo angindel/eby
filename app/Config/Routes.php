@@ -47,12 +47,6 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->get('dashboard', [Administrator::class, 'dashboard']);
     $routes->get('identitas', [Administrator::class, 'identitas'], ['as' => 'admin.identitas']);
     $routes->post('identitas/proses_edit_identitas', [Administrator::class, 'edit_identitas'], ['as' => 'admin.identitas.edit']);
-    $routes->get('produk', [Administrator::class, 'produk']);
-    $routes->get('tambah_produk', [Administrator::class, 'tambah_produk']);
-    $routes->post('proses_tambah_produk', [Administrator::class, 'proses_produk']);
-    $routes->post('proses_edit_produk', [Administrator::class, 'proses_produk']);
-    $routes->get('edit_produk/(:num)', [Administrator::class, 'edit_produk/$1']);
-    $routes->get('delete_produk/(:num)', [Administrator::class, 'delete_produk/$1']);
     $routes->get('kategori', [Administrator::class, 'kategori']);
     $routes->get('tambah_kategori', [Administrator::class, 'tambah_kategori']);
     $routes->post('proses_tambah_kategori', [Administrator::class, 'proses_tambah_kategori']);
@@ -65,6 +59,18 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->post('ajdt/(:segment)/(:segment)', [Administrator::class, 'ajaxDatatables']);
     $routes->get('stok', [Administrator::class, 'stok']);
     $routes->get('tes', [Administrator::class, 'admin_tes']);
+
+    // GROUP HALAMAN PRODUK
+    $routes->group('produk', ['filter' => 'adminFilter'], static function ($routes){
+        $routes->get('/', [Administrator::class, 'produk']);
+        $routes->get('tambah', [Administrator::class, 'tambah_produk']);
+        $routes->post('proses_tambah', [Administrator::class, 'proses_produk']);
+        $routes->get('edit/(:num)', [Administrator::class, 'edit_produk/$1']);
+        $routes->post('proses_edit', [Administrator::class, 'proses_produk']);
+        $routes->get('delete/(:num)', [Administrator::class, 'delete_produk/$1']);
+    });
+
+    // GROUP HALAMAN PAYMENT CHANNEL, DELIVERY SERVICE, DAN SLIDE
     $routes->group('aio', ['namespace' => 'App\Controllers\Admin', 'filter' => 'adminFilter'], static function ($routes){
         $routes->get('(:segment)', 'Aio::index/$1');
         $routes->get('(:segment)/tambah', 'Aio::tambah/$1/$2');
@@ -72,6 +78,8 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
         $routes->get('(:segment)/edit/(:num)', 'Aio::edit/$1/$2');
         $routes->post('(:segment)/proses_edit', 'Aio::proses_edit/$1');
     });
+
+
     $routes->get('(:segment)', [Administrator::class, 'direct']);
 });
 

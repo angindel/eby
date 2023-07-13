@@ -12,7 +12,7 @@ $ds = session()->getFlashdata('_ci_validation_errors');
                   <h3>Tambah Produk</h3>
               </div>
               <div class="card-body">
-                  <?= form_open_multipart('administrator/proses_tambah_produk') ?>
+                  <?= form_open_multipart('administrator/produk/proses_tambah') ?>
                       <?= csrf_field(); ?>
 
                       <div class="form-group">
