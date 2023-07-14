@@ -123,26 +123,32 @@
     </section> -->
     <!-- END KATEGORI -->
     <!-- PRODUK TERLARIS -->
-    <div class="row"><h2 class="fw-bold text-center">PRODUK TERLARIS</h2></div>
-    <div class="row">
-        <div id="produk-slide" class="owl-carousel owl-theme">
-            <?php foreach($produk_new as $row) { ?>
-            <div class="card p-1 mr-1">
-                <a href="<?= base_url("produk/detail/$row->produk_seo") ?>">
-                    <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img-top" alt="...">
-                </a>
-                <div class="card-body p-0 m-1">
-                    <p class="card-title" style="font-size:12px;">Rp.<?= rupiah($row->harga_konsumen) ?></p>
-                    <a href="<?= base_url("produk/detail/$row->produk_seo") ?>" style="text-decoration: none;"><h5 class="card-text lh-sm caption-pb "><?= $row->nama_produk ?></h5></a>
+    <section id="produk-terlaris">
+        <div class="row hot-block">
+            <div class="col-12">
+                <h2 class="fw-bold text-center">PRODUK TERLARIS</h2>
+            </div>
+            <div class="col-12">
+                <div id="produk-slide" class="owl-carousel owl-theme">
+                    <?php foreach($produk_new as $row) { ?>
+                    <div class="card p-0 m-1" style="border:none;">
+                            <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img h-100" alt="...">
+                        <div class="card-img-overlay p-0 m-0">
+                            <div style="background-color: #01fbd8cf;border-radius: 5px 10px 100px 0;width:70%;">
+                                <p class="card-title" style="font-size:12px;">Rp.<?= rupiah($row->harga_konsumen) ?></p>
+                            </div>
+                            <a href="<?= base_url("produk/detail/$row->produk_seo") ?>" style="text-decoration: none;"><h3 class="card-text lh-sm caption-p" style="background-color: #ffffffa6;border-radius: 5px 50px 10px 0"><?= $row->nama_produk ?></h3></a>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
             </div>
-            <?php } ?>
         </div>
-    </div>
+    </section>
     <!-- END PRODUK TERLARIS -->
     <!-- KONTEN -->
     <section id="konten" class="border-bottom pb-3 border-dark-subtle">
-        <div class="row bg-primary align-items-center ps-2 py-2 my-2">
+        <div class="row bg-primary align-items-center ps-2 py-2 mb-2">
             <div class="col-8 m-0 p-0 justify-content-start">
                 <h2 class="align-items-stretch m-0 p-0">EBYKARYA TERBARU</h2>
             </div>
@@ -237,20 +243,20 @@
           dots:false,
           autoplay:true,
           autoplaySpeed: 250,
-          autoplayTimeout:2000,
+          autoplayTimeout:3000,
           smartSpeed:250,
           loop:true,
-          center:true,
+          
           responsiveClass:true,
           responsive: {
             0:{
               items:3
             },
             480:{
-              items:5
+              items:4
             },
             768:{
-              items:7
+              items:6
             },
             1024:{
               items:9

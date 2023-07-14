@@ -123,7 +123,17 @@ $ds = session()->getFlashdata('_ci_validation_errors');
 <?= $this->endSection('content') ?>
 
 <?= $this->section('cdn-foot') ?>
-<script type="text/javascript">
-  
-</script>
+<script type="text/javascript" src="<?= base_url("ckeditor5/ckeditor.js") ?>"></script>
+    <script>
+    ClassicEditor
+      .create( document.querySelector( '#editorket' ), {
+        // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+      } )
+      .then( editor => {
+        window.editor = editor;
+      } )
+      .catch( err => {
+        console.error( err.stack );
+      } );
+  </script>
 <?= $this->endSection() ?>

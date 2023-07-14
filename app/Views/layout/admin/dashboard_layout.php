@@ -13,6 +13,5 @@
   <?= $this->include('assets/cdn/bs_js-46') ?>
   <?= $this->include('assets/cdn/datatables_js') ?>
   <?= $this->include('assets/cdn/adminlte_js') ?>
-  <?= $this->include('assets/cdn/ckeditor') ?>
   <?= $this->renderSection('script') ?>
 <?= $this->endSection() ?>

@@ -125,4 +125,32 @@
 	padding: 2px;
 	color: black;
 }
+
+.hot-block {
+	padding:10px 0 50px 0;
+	background: #ff1493;
+}
+
+#produk-slide > div.owl-stage-outer > div.owl-stage > div.owl-item > div.card > div.card-img-overlay > div > p.card-title
+{
+	font-size: 80%;
+	font-weight: 700;
+	color: #000;
+	padding: 0 3px;
+	text-shadow: 0 0 2px #fff;
+}
+.caption-p{
+	bottom: 0;
+	left: 0;
+	padding: 10px 5px;
+	position: absolute;
+	width: 100%;
+	color: #ff1493;
+	font-size: 90%;
+	font-weight: 700;
+	margin: 0;
+	text-shadow: 2px -1px 4px #fff;
+	text-align: center;
+}
+
 </style>
