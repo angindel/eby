@@ -1,39 +1,53 @@
 <?php $pager->setSurroundCount(2); ?>
 
-<nav aria-label="<?= lang('Pager.pageNavigation') ?>">
-  <ul class="pagination">
-    <?php if ($pager->hasPrevious()) : ?>
-      <li class="page-item">
-        <a class="page-link" href="<?= $pager->getFirst() ?>" aria-label="<?= lang('Pager.first') ?>">
-          <span aria-hidden="true"><?= lang('Pager.first') ?></span>
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link"> href="<?= $pager->getPrevious() ?>" aria-label="<?= lang('Pager.previous') ?>">
-          <span aria-hidden="true"><?= lang('Pager.previous') ?></span>
-        </a>
-      </li>
-    <?php endif ?>
+<div id="scroller-status">
+    <div class="loader-ellips infinite-scroll-request">
+        <span class="loader-ellips__dot"></span>
+        <span class="loader-ellips__dot"></span>
+        <span class="loader-ellips__dot"></span>
+        <span class="loader-ellips__dot"></span>
+    </div>
+    <h3 class="scroller-status__message infinite-scroll-last text-center mt-3 border border-2 p-2 bg-primary fw-bold">Tidak Ada Halaman Lain Untuk Dimuat
+    </h3>
+    <p class="scroller-status__message infinite-scroll-error">Error. Silahkan refresh halaman ini atau <a href="<?= base_url("produk/page/{$pager->getNextPageNumber()}") ?>">Klik disini</a></p>
+</div>
+<div class="row text-center" id="pagination">
+    <nav>
+        <ul class="pagination">
+            <?php if ($pager->hasPreviousPage()) : ?>
+                <li>
+                    <a href="<?= $pager->getFirst() ?>">
+                        <span>Awal</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= $pager->getPreviousPage() ?>">
+                        <span><</span>
+                    </a>
+                </li>
+            <?php endif ?>
+            <?php foreach ($pager->links() as $link): ?>
+            <li <?= $link['active'] ? 'class="active"' : '' ?>>
+                <a class="page-numbers" href="<?= $link['uri'] ?>"><?= $link['title'] ?></a>
+            </li>
+            <?php endforeach ?>
 
-    <?php foreach ($pager->links() as $link) : ?>
-      <li class="page-item <?= $link['active'] ? 'active' : '' ?>">
-        <a class="page-link" href="<?= $link['uri'] ?>">
-          <?= $link['title'] ?>
-        </a>
-      </li>
-    <?php endforeach ?>
-
-    <?php if ($pager->hasNext()) : ?>
-      <li class="page-item">
-        <a class="page-link"> href="<?= $pager->getNext() ?>" aria-label="<?= lang('Pager.next') ?>">
-          <span aria-hidden="true"><?= lang('Pager.next') ?></span>
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link"> href="<?= $pager->getLast() ?>" aria-label="<?= lang('Pager.last') ?>">
-          <span aria-hidden="true"><?= lang('Pager.last') ?></span>
-        </a>
-      </li>
-    <?php endif ?>
-  </ul>
-</nav>
+            <?php if ($pager->hasNextPage()) : ?>
+                <li>
+                    <a class="next page-numbers" href="<?= $pager->getNextPage() ?>">
+                        <span>></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="next page-numbers" href="<?= $pager->getLast() ?>">
+                        <span>Akhir</span>
+                    </a>
+                </li>
+            <?php endif ?>          
+        </ul>
+    </nav>
+    <span>Halaman <span class="page"><?= $pager->getCurrentPageNumber() ?></span> dari <?= $pager->getPageCount() ?></span>
+</div>
+<script type="text/javascript">
+    var last_page = <?= $pager->getPageCount() ?>;
+</script>
