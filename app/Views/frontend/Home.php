@@ -156,26 +156,27 @@
                 <a href="#" class="btn btn-primary btn-sm btn-lc me-2" title="Produk Terbaru" rel="category">SEMUA</a>
             </div>
         </div>
-        <div id="post-infscroll">
+        <div id="produk-inf" class="row row-cols-3 row-cols-md-5 p-0 m-0">
         </div>
-        <div class="page-load-status">
+        <div id="scroller-status">
             <div class="loader-ellips infinite-scroll-request">
                 <span class="loader-ellips__dot"></span>
                 <span class="loader-ellips__dot"></span>
                 <span class="loader-ellips__dot"></span>
                 <span class="loader-ellips__dot"></span>
             </div>
-            <p class="infinite-scroll-last">Akhir Konten</p>
+            <h3 class="scroller-status__message infinite-scroll-last text-center mt-3 border border-2 p-2 bg-primary fw-bold">Tidak Ada Halaman Lain Untuk Dimuat
+            </h3>
             <p class="infinite-scroll-error font-monospace fs-4 fw-bold">Tidak ada lagi halaman untuk dimuat</p>
         </div>
         <div class="row">
             <div class="col text-center">
-                <button class="btn btn-lg btn-primary view-more-button">Lihat Lebih Banyak</button>
+                <button class="btn btn-lg btn-primary view-more-produk-button">Lihat Lebih Banyak</button>
             </div>
         </div>
     </section>
     <!-- END KONTEN -->
-
+    
     <div class="row">
       <div class="col-md-12 col-lg-6 border border-top-0 border-dark-subtle my-2">
           <div class="row">
@@ -204,30 +205,47 @@
 <script src="https://unpkg.com/infinite-scroll@4.0.1/dist/infinite-scroll.pkgd.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $('#produk-inf').infiniteScroll({
+            // path: '.next',
+            path: function(){
+                return `produk/page/${this.loadCount+1}`;
+            },
+            append: '.infscroll-item',
+            history: false,
+            historyTitle: false,
+            hideNav: '#pagination',
+            scrollThreshold: false,
+            button: '.view-more-produk-button',
+            status: '#scroller-status'
+        });
+     
+        $('#produk-inf').infiniteScroll('loadNextPage');
+
         $('#teskat').owlCarousel({
-    loop:false,
-    margin:5,
-    items:1,
-    nav: true,
-    responsiveClass:true,
-          responsive: {
-            0:{
-              items: 5
-            },
-            480:{
-              items:6
-            },
-            670 :{
-                items: 8
-            },
-            768:{
-              items:10
-            },
-            1024:{
-              items:16
-            },
-          }
-});
+            loop:false,
+            margin:5,
+            items:1,
+            nav: true,
+            responsiveClass:true,
+                  responsive: {
+                    0:{
+                      items: 5
+                    },
+                    480:{
+                      items:6
+                    },
+                    670 :{
+                        items: 8
+                    },
+                    768:{
+                      items:10
+                    },
+                    1024:{
+                      items:16
+                    },
+                  }
+        });
+
         $("#head-slide").owlCarousel({
           items:1,
           navText: false,
@@ -246,7 +264,6 @@
           autoplayTimeout:3000,
           smartSpeed:250,
           loop:true,
-          
           responsiveClass:true,
           responsive: {
             0:{
@@ -263,64 +280,6 @@
             },
           }
         });
-
-
-        // $(".pagination__next").on("click", function(){
-        //   $.ajax({
-        //     url: "<?= base_url('tes/2') ?>",
-        //     type : 'get',
-        //     success: function(data){
-        //       $("#post-infscroll>.col:last").after(data).show().fadeIn("slow");
-        //     },
-        //   });
-        // });
-
-        let $maininfscroll = $('#post-infscroll').infiniteScroll({
-              // options
-              path: function(){
-                return `tes/${this.loadCount + 1}`;
-              },
-              append: false,
-              history: false,
-              button: '.view-more-button',
-              scrollThreshold: false,
-              elementScroll : 'div.col',
-              status: '.page-load-status',
-              responseBody: 'json',
-            });
-
-        $maininfscroll.on('load.infiniteScroll', function(event, body){
-            // compile body data into HTML
-          let itemsHTML = body.map( getItemHTML ).join('');
-          itemsHTML = '<div class="row row-cols-3 row-cols-md-5 p-0 m-0">' + itemsHTML + '</div>';
-          // convert HTML string into elements
-          let $items =  $( itemsHTML );
-          // append item elements
-          $maininfscroll.infiniteScroll( 'appendItems', $items );
-        });
-
-// load initial page
-$maininfscroll.infiniteScroll('loadNextPage');
-
-//------------------//
-
-function getItemHTML({base, nama_produk, harga_konsumen, gambar, produk_seo}) {
-    return `<div class="col px-1 mb-1">
-                    <div class="card h-100">
-                        <a href="${base}produk/detail/${produk_seo} ">
-                            <img src="${base}uploads/produk/${gambar}" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body p-0 m-1">
-                            <h5 class="card-title">Rp.${harga_konsumen}</h5>
-                            <a href="${base}produk/detail/${produk_seo}" style="text-decoration: none;"><h3 class="card-text lh-sm caption-pb">${nama_produk}</h3></a>
-                        </div>
-                        <ul class="list-group list-group-flush text-end border border-top-0">
-                            <li class="list-group-item p-0 m-1"><a href="${base}produk/detail/${produk_seo}" class="btn btn-primary btn-sm">Lihat Detil</a></li>
-                        </ul>
-                    </div>
-                </div>`;
-}
-
     });
 
     
