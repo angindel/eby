@@ -28,7 +28,10 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+// HALAMAN UTAMA
 $routes->get('/', 'Home::index');
+$routes->get('produk/page/(:num)', 'Produk::index/$1');
 $routes->get('produk/detail/(:any)', 'Home::produk_detail/$1');
 $routes->get('produk/kategori/(:any)', 'Home::produk_kategori/$1');
 
