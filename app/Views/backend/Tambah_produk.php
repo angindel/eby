@@ -13,7 +13,7 @@ $ds = session()->getFlashdata('_ci_validation_errors');
               </div>
               <div class="card-body">
                   <?= form_open_multipart('administrator/produk/proses_tambah') ?>
-                      <?= csrf_field(); ?>
+                      <input type="hidden" name="tambah">
 
                       <div class="form-group">
                           <label for="kategori_produk">Kategori</label>
@@ -36,12 +36,12 @@ $ds = session()->getFlashdata('_ci_validation_errors');
                       </div>
 
                       <div class="form-group">
-                          <label for="harga_modal">Harga Modal</label>
-                          <?php if(empty($ds['harga_modal']) ) : ?>
-                          <input type="text" class="form-control" id="harga_modal" name="harga_modal" value="<?= old('harga_modal'); ?>">
+                          <label for="harga_modal">Harga Beli</label>
+                          <?php if(empty($ds['harga_beli']) ) : ?>
+                          <input type="text" class="form-control" id="harga_modal" name="harga_beli" value="<?= old('harga_beli'); ?>">
                           <?php else: ?>
-                          <input type="text" class="form-control is-invalid" id="harga_modal" name="harga_modal" value="<?= old('harga_modal'); ?>">
-                          <div id="harga_modal" class="invalid-feedback"><?= $ds['harga_modal'] ?></div>
+                          <input type="text" class="form-control is-invalid" id="harga_beli" name="harga_beli" value="<?= old('harga_beli'); ?>">
+                          <div id="harga_beli" class="invalid-feedback"><?= $ds['harga_beli'] ?></div>
                           <?php endif; ?>
                       </div>
 
@@ -88,9 +88,9 @@ $ds = session()->getFlashdata('_ci_validation_errors');
                       <div class="form-group">
                           <label for="keterangan">Keterangan</label>
                           <?php if(empty($ds['keterangan']) ) : ?>
-                          <textarea type="text" class="form-control" id="editorket" name="keterangan" value="<?= old('keterangan'); ?>"></textarea>
+                          <textarea type="text" class="form-control" id="keterangan" name="keterangan" value="<?= old('keterangan'); ?>"></textarea>
                           <?php else: ?>
-                          <textarea class="form-control is-invalid" id="editorket" name="keterangan" value="<?= old('keterangan'); ?>"></textarea>
+                          <textarea class="form-control is-invalid" id="keterangan" name="keterangan" value="<?= old('keterangan'); ?>"></textarea>
                           <div id="keterangan" class="invalid-feedback"><?= $ds['keterangan'] ?></div>
                           <?php endif; ?>
                       </div>
@@ -119,7 +119,7 @@ $ds = session()->getFlashdata('_ci_validation_errors');
     <script type="text/javascript" src="<?= base_url("ckeditor5/ckeditor.js") ?>"></script>
     <script>
     ClassicEditor
-      .create( document.querySelector( '#editorket' ), {
+      .create( document.querySelector( '#keterangan' ), {
         // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
       } )
       .then( editor => {
