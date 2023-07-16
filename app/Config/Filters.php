@@ -36,7 +36,7 @@ class Filters extends BaseConfig
             // 'invalidchars',
         ],
         'after' => [
-            'toolbar',
+            'toolbar' => ['except' => ['produk/page/*']],
             // 'honeypot',
             // 'secureheaders',
         ],
