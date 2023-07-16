@@ -125,7 +125,12 @@ class Administrator extends BaseController
         ];
         if( !empty($img->getName()) )
         {
-            $dvalid['gambar'] = ['rules' => 'uploaded[gambar]','is_image[gambar]','mime_in[gambar,image/jpg,image/jpeg,image/png,image/webp]','errors' => ['required' => 'Gambar Harus Di Input']];
+            $dvalid['gambar'] = [
+                'rules' => 'uploaded[gambar]','is_image[gambar]','mime_in[gambar,image/jpg,image/jpeg,image/png,image/webp]',
+                'errors' => [
+                    'required' => 'Gambar Harus Di Input'
+                ]
+            ];
         }
      if( !$this->validate($dvalid) )
         {
@@ -151,12 +156,12 @@ class Administrator extends BaseController
             $data['gambar'] = $fileName;
             $img->move(WRITEPATH . 'uploads/produk/', $fileName);
         }
-        if(!is_null($dr['edit']))
+        if(isset($dr['edit']))
         {
             $this->m_produk->update($dr['id'], $data);
             session()->setFlashdata('msg', 'Edit Data Produk Berhasil');
         }
-        elseif (!is_null($dr['tambah'])) {
+        elseif (isset($dr['tambah'])) {
             $this->m_produk->insert($data);
             session()->setFlashdata('msg', 'Tambah Data Produk Berhasil');
         }
