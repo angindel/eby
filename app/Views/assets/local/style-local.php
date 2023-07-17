@@ -96,31 +96,15 @@
 }
 
 .katkat {
-    height: 5rem;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2px;
+    margin-right: 2px;
     border-radius: 10px;
-    position: relative;
+    background-color: #f9559a;
 }
+.katkat:last-child {
 
-.katkat img {
-	position:absolute;
-	display:block;
-	top:0;
-	width:100%;
-	height: 50%;
 }
 
 .katkat p {
-	position:absolute;
-	bottom: 0;
-	font-size: 12px;
-	font-weight: 130%;
-	justify-content: center;
-	align-items: center;
 	margin: 0;
 	padding: 2px;
 	color: black;

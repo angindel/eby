@@ -41,10 +41,10 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div id="produk-inf" class="row row-cols-3 row-cols-md-5 p-0 m-0">
+        <div id="produk-inf" class="row row-cols-3 row-cols-md-5">
         <?php foreach($produk as $row): ?>
-        <div class="col px-1 mb-1 infscroll-item">
-            <div class="card h-100">
+        <div class="col px-1 mb-1 infscroll-item mb-3">
+            <div class="shadow card h-100 border border-0 p-0 bg-body-tertiary rounded">
                 <a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>">
                     <img src="<?= base_url("uploads/produk/{$row->gambar}") ?>" class="card-img-top" alt="...">
                 </a>
@@ -52,8 +52,8 @@
                     <h5 class="card-title">Rp. <?= $row->harga_konsumen ?></h5>
                     <a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>" style="text-decoration: none;"><h3 class="card-text lh-sm caption-pb"><?= $row->nama_produk ?></h3></a>
                 </div>
-                <ul class="list-group list-group-flush text-end border border-top-0">
-                    <li class="list-group-item p-0 m-1"><a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>" class="btn btn-primary btn-sm">Lihat Detil</a></li>
+                <ul class="list-group list-group-flush text-center border border-0">
+                    <li class="list-group-item p-0 m-1"><a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>" class="btn btn-primary btn-sm">Lihat Detail</a></li>
                 </ul>
             </div>
         </div>

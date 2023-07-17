@@ -51,9 +51,9 @@
 
     <!-- TES KATEGORI -->
     <section style="margin-bottom: 20px;">
-     <div class="row bg-primary align-items-center ps-2 py-2 my-2">
-            <div class="col-8 m-0 p-0 justify-content-start">
-                <h2 class="align-items-stretch m-0 p-0 fw-bold">KATEGORI</h2>
+     <div class="row ps-2 py-2 my-2 border border-2 border-opacity-75 rounded">
+            <div class="col-8 m-0 p-0 text-start">
+                <h2 class="m-0 p-0 fw-bold" style="color: #e1609b; text-shadow: 0 0 1px #fff;">KATEGORI</h2>
             </div>
             <div class="col-4 text-end m-0 p-0">
                 <a href="#" class="btn btn-primary btn-sm btn-lc me-2" title="Produk Terbaru" rel="category">SEMUA</a>
@@ -64,7 +64,7 @@
         $tk = count($kategori);
         for($x=0; $x < $tk;)
         {
-            echo '<div class="item">';
+            echo '<div class="item m-0" style="height:auto;min-height:300px;">';
                 for($i=0;$i < 2; $i++)
                 {
                     if(!isset($kategori[$x]))
@@ -72,9 +72,13 @@
                         break;
                     } else {
         ?>
-                    <div class="katkat">
-                                <img src="<?php echo 'uploads/kategori/'.$kategori[$x]->gambar; ?>">
-                                <p><?php echo $kategori[$x]->nama_kategori ?></p>
+                    <div class="katkat h-50 my-1 border border-1 rounded">
+                        <div class="h-75">
+                            <img class="h-100 w-100 p-4" src="<?php echo 'uploads/kategori/'.$kategori[$x]->gambar; ?>" style="background-color: #fff;border-radius: 50%;">
+                        </div>
+                        <div class="h-25">
+                            <p class="h-100 w-100 text-center fs-6 fw-medium"><?php echo $kategori[$x]->nama_kategori ?></p>
+                        </div>
                     </div>
         <?php
                         $x++;
@@ -130,30 +134,34 @@
             </div>
             <div class="col-12">
                 <div id="produk-slide" class="owl-carousel owl-theme">
-                    <?php foreach($produk_new as $row) { ?>
-                    <div class="card p-0 m-1" style="border:none;">
-                            <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img h-100" alt="...">
-                        <div class="card-img-overlay p-0 m-0">
-                            <div style="background-color: #01fbd8cf;border-radius: 5px 10px 100px 0;width:70%;">
-                                <p class="card-title" style="font-size:12px;">Rp.<?= rupiah($row->harga_konsumen) ?></p>
+                    <?php foreach($produk_new as $row) : ?>
+                        <div class="item position-relative" style="height:300px">
+                            <a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>" style="text-decoration: none;" >
+                            <div class="card p-0 m-1 h-100" style="border:none;">
+                                <img src="<?= base_url() ?>uploads/produk/<?= $row->gambar ?>" class="card-img h-100" alt="...">
+                                <div class="p-0 m-0">
+                                    <div class="position-absolute ps-2 pt-2 fw-bold" style="background-color: #01fbd8;border-radius: 30px 10px 100px 5px;width:70%;top:-5px; left:-5px;">
+                                        <p class="card-title" style="font-size:12px;">Rp.<?= rupiah($row->harga_konsumen) ?></p>
+                                    </div>
+                                    <h3 class="card-text lh-sm caption-p position-absolute bottom-0" style="background-color: #ffffffa6;border-radius: 5px 50px 10px 0;height: 40px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;"><?= $row->nama_produk ?></h3>
+                                </div>
                             </div>
-                            <a href="<?= base_url("produk/detail/$row->produk_seo") ?>" style="text-decoration: none;"><h3 class="card-text lh-sm caption-p" style="background-color: #ffffffa6;border-radius: 5px 50px 10px 0"><?= $row->nama_produk ?></h3></a>
+                        </a>
                         </div>
-                    </div>
-                    <?php } ?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>
     </section>
     <!-- END PRODUK TERLARIS -->
     <!-- KONTEN -->
-    <section id="konten" class="border-bottom pb-3 border-dark-subtle">
-        <div class="row bg-primary align-items-center ps-2 py-2 mb-2">
-            <div class="col-8 m-0 p-0 justify-content-start">
-                <h2 class="align-items-stretch m-0 p-0">EBYKARYA TERBARU</h2>
+    <div id="konten" class="row pb-3 px-2 mt-1 mx-1 border border-2 border-opacity-75 rounded">
+        <div class="row m-0 p-0">
+            <div class="col-8 m-0 p-1 text-start">
+                <h2 class="fw-bold m-0 p-0" style="color: #e1609b; text-shadow: 0 0 1px #fff;">EBYKARYA TERBARU</h2>
             </div>
-            <div class="col-4 text-end m-0 p-0">
-                <a href="#" class="btn btn-primary btn-sm btn-lc me-2" title="Produk Terbaru" rel="category">SEMUA</a>
+            <div class="col-4 text-end m-0 p-1">
+                <a href="#" class="btn btn-primary btn-sm btn-lc" title="Produk Terbaru" rel="category">SEMUA</a>
             </div>
         </div>
         <div id="produk-inf" class="row row-cols-3 row-cols-md-5 p-0 m-0">
@@ -174,13 +182,13 @@
                 <button class="btn btn-lg btn-primary view-more-produk-button">Lihat Lebih Banyak</button>
             </div>
         </div>
-    </section>
+    </div>
     <!-- END KONTEN -->
     
     <div class="row">
-      <div class="col-md-12 col-lg-6 border border-top-0 border-dark-subtle my-2">
+      <div class="col-md-12 col-lg-6 my-2">
           <div class="row">
-              <div class="col-12">PAYMENT CHANNEL</div>
+              <div class="col-12"><span class="fs-5 fw-bold" style="color: #e1609b;">PAYMENT CHANNEL</span></div>
               <?php foreach($pc as $row) { ?>
               <div class="col-2">
                 <img src="<?= base_url("uploads/payment_channel/$row->gambar") ?>" class="img-thumbnail">
@@ -188,9 +196,9 @@
               <?php } ?>
           </div>
       </div>
-      <div class="col-md-12 col-lg-6 border border-top-0 border-dark-subtle my-2">
+      <div class="col-md-12 col-lg-6 my-2">
           <div class="row">
-              <div class="col-12">Delivery Service</div>
+              <div class="col-12"><span class="fs-5 fw-bold" style="color: #e1609b;">DELIVERY SERVICE</span></div>
               <?php foreach($ds as $row) { ?>
               <div class="col-2">
                 <img src="<?= base_url("uploads/delivery_service/$row->gambar") ?>" class="img-thumbnail">
@@ -229,19 +237,19 @@
             responsiveClass:true,
                   responsive: {
                     0:{
-                      items: 5
+                      items: 2
                     },
                     480:{
-                      items:6
+                      items:3
                     },
                     670 :{
-                        items: 8
+                        items: 4
                     },
                     768:{
-                      items:10
+                      items: 6
                     },
                     1024:{
-                      items:16
+                      items: 10
                     },
                   }
         });
@@ -259,10 +267,10 @@
 
         $("#produk-slide").owlCarousel({
           dots:false,
-          autoplay:true,
-          autoplaySpeed: 250,
-          autoplayTimeout:3000,
-          smartSpeed:250,
+          // autoplay:true,
+          // autoplaySpeed: 250,
+          // autoplayTimeout:3000,
+          // smartSpeed:250,
           loop:true,
           responsiveClass:true,
           responsive: {
@@ -273,10 +281,10 @@
               items:4
             },
             768:{
-              items:6
+              items:5
             },
             1024:{
-              items:9
+              items:7
             },
           }
         });
