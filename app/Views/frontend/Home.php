@@ -64,7 +64,7 @@
         $tk = count($kategori);
         for($x=0; $x < $tk;)
         {
-            echo '<div class="item m-0" style="height:auto;min-height:300px;">';
+            echo '<div class="kategori-item m-0" style="min-height:400px;"><div class="h-100">';
                 for($i=0;$i < 2; $i++)
                 {
                     if(!isset($kategori[$x]))
@@ -72,19 +72,21 @@
                         break;
                     } else {
         ?>
-                    <div class="katkat h-50 my-1 border border-1 rounded">
-                        <div class="h-75">
-                            <img class="h-100 w-100 p-4" src="<?php echo 'uploads/kategori/'.$kategori[$x]->gambar; ?>" style="background-color: #fff;border-radius: 50%;">
+                    <a href="<?= base_url("produk/kategori/{$kategori[$x]->id_kategori_produk}") ?>" style="text-decoration: none;">
+                    <div class="katkat h-50 my-1 p-2 border border-1 rounded">
+                        <div style="height:70%">
+                            <img class="h-100 p-4" src="<?php echo 'uploads/kategori/'.$kategori[$x]->gambar; ?>" style="background-color: #fff;border-radius: 50%;">
                         </div>
-                        <div class="h-25">
-                            <p class="h-100 w-100 text-center fs-6 fw-medium"><?php echo $kategori[$x]->nama_kategori ?></p>
+                        <div style="height:30%;">
+                            <p class="text-center fs-5 fw-bold"><?php echo $kategori[$x]->nama_kategori ?></p>
                         </div>
                     </div>
+                </a>
         <?php
                         $x++;
                     }     
                 }
-            echo '</div>';
+            echo '</div></div>';
         }
         ?>
     </div>
@@ -211,6 +213,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="<?= base_url("owlcarousel/dist/owl.carousel.min.js") ?>"></script>
 <script src="https://unpkg.com/infinite-scroll@4.0.1/dist/infinite-scroll.pkgd.min.js"></script>
+<script src="<?= base_url("asset/js/jquery.matchHeight.js") ?>" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#produk-inf').infiniteScroll({
@@ -237,19 +240,22 @@
             responsiveClass:true,
                   responsive: {
                     0:{
-                      items: 2
-                    },
-                    480:{
                       items:3
                     },
-                    670 :{
-                        items: 4
+                    576:{
+                      items:4
                     },
                     768:{
-                      items: 6
+                      items:5
                     },
-                    1024:{
-                      items: 10
+                    992:{
+                      items:7
+                    },
+                    1200:{
+                      items:9
+                    },
+                    1400:{
+                      items:9
                     },
                   }
         });
@@ -277,16 +283,26 @@
             0:{
               items:3
             },
-            480:{
+            576:{
               items:4
             },
             768:{
               items:5
             },
-            1024:{
+            992:{
               items:7
             },
+            1200:{
+              items:9
+            },
+            1400:{
+              items:9
+            },
           }
+        });
+
+        $(".kategori-item").matchHeight({
+            target: $('.katkat')
         });
     });
 

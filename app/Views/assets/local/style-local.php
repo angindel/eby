@@ -100,9 +100,6 @@
     border-radius: 10px;
     background-color: #f9559a;
 }
-.katkat:last-child {
-
-}
 
 .katkat p {
 	margin: 0;

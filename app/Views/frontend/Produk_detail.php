@@ -84,7 +84,15 @@
   </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0"><?= $produk->keterangan ?></div>
+    <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+    <div class="container-fluid">
+        <div class="row p-2 my-2">
+            <div class="col-9 fs-5">
+                <?= $produk->keterangan ?>
+            </div>
+        </div>
+    </div>
+    </div>
   <div class="tab-pane fade" id="nav-penilaian" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
       <div class="row">
           <div class="col-sm-12 col-md-8">
@@ -106,20 +114,28 @@
 </div>
 </div>
 
+<div id="produk-terkait" class="container-fluid">
     <div class="row">
-        <div class="col">
+        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
             <div>PRODUK TERKAIT</div>
         </div>
-        <div class="col">
+        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
             <div>PRODUK TERKAIT</div>
         </div>
-        <div class="col">
+        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
             <div>PRODUK TERKAIT</div>
         </div>
-        <div class="col">
+        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
+            <div>PRODUK TERKAIT</div>
+        </div>
+        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
+            <div>PRODUK TERKAIT</div>
+        </div>
+        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
             <div>PRODUK TERKAIT</div>
         </div>
     </div>
+</div>
 </main>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script type="text/javascript">
