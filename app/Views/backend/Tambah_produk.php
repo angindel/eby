@@ -2,7 +2,7 @@
 $ds =[];
 $ds = session()->getFlashdata('_ci_validation_errors');
 ?>
-<?= $this->extend('layout/admin/dashboard_layout') ?>
+<?= $this->extend('backend/layout/admin/dashboard_layout') ?>
 <?= $this->section('content') ?>
     <!-- Main content -->
     <section class="content">

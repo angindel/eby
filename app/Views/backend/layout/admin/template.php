@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-	<title><?= esc($title) ?></title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="ibnulimc">
-	<link rel="icon" type="image/x-icon" href="<?php echo base_url(); ?>/uploads/produk/favicon.ico" />
-	<?= $this->renderSection('cdn-head') ?>
+  <title><?= esc($title) ?></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="ibnulimc">
+  <link rel="icon" type="image/x-icon" href="<?php echo base_url(); ?>/uploads/produk/favicon.ico" />
+  <?= $this->renderSection('cdn-head') ?>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-<?= $this->include('layout/admin/navbar') ?>
-<?= $this->include('layout/admin/sidebar') ?>
+<?= $this->include('backend/layout/admin/navbar') ?>
+<?= $this->include('backend/layout/admin/sidebar') ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <div class="mb-3"></div>

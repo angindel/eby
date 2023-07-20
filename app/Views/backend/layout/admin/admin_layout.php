@@ -1,4 +1,4 @@
-<?= $this->include('layout/admin/header') ?>
+<?= $this->include('backend/layout/admin/header') ?>
 
 <?= $this->renderSection('content') ?>
 

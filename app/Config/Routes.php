@@ -39,7 +39,7 @@ $routes->get('produk/kategori/(:any)', 'Home::produk_kategori/$1');
 $routes->cli('tools', 'Tools::message');
 $routes->get('tools', 'Tools::message');
 $routes->post('tools', 'Tools::message');
-$routes->get('tes/(:num)', 'Home::produkIS/$1');
+$routes->get('tes', 'Home::fake');
 $routes->get('tes/(:num)/(:num)', 'Home::produkIS/$1/$2');
 
 use App\Controllers\Administrator;

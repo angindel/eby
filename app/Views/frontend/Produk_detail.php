@@ -1,4 +1,4 @@
-<?= $this->extend('layout/home/home_layout') ?>
+<?= $this->extend('frontend/layout/home/home_layout') ?>
 
 <?= $this->section('cdn-head') ?>
     <?= $this->include('assets/local/bs_css-5.3.0') ?>
@@ -22,7 +22,7 @@
 <?= $this->section('content') ?>
 <body>
 <nav class="navbar sticky-top navbar-expand-md bg-light" data-bs-theme="light">
-    <?= $this->include('layout/home/navbar') ?>
+    <?= $this->include('frontend/layout/home/navbar') ?>
 </nav>
 <main class="container-fluid px-5">
         <div id="product-detail" class="card my-5 border border-0">
@@ -116,24 +116,17 @@
 
 <div id="produk-terkait" class="container-fluid">
     <div class="row">
-        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
-            <div>PRODUK TERKAIT</div>
+        <?php foreach($produk_terkait as $row) : ?>
+        <div class="col-2 border border-2 rounded bg-primary m-0 p-0 h-100" style="min-height:250px;height:auto">
+            <div class="h-75">
+                <img class="img-thumbnail h-100 w-100 m-0 p-0" src="<?= base_url("uploads/produk/{$row->gambar}") ?>">
+            </div>
+            <div class="h-25">
+                <p class="fs-6"><?= $row->nama_produk ?></p>
+            </div>
         </div>
-        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
-            <div>PRODUK TERKAIT</div>
-        </div>
-        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
-            <div>PRODUK TERKAIT</div>
-        </div>
-        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
-            <div>PRODUK TERKAIT</div>
-        </div>
-        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
-            <div>PRODUK TERKAIT</div>
-        </div>
-        <div class="col-2 border border-2 rounded bg-primary" style="min-height:200px">
-            <div>PRODUK TERKAIT</div>
-        </div>
+        <?php endforeach ?>
+        
     </div>
 </div>
 </main>

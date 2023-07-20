@@ -1,14 +1,14 @@
-<?= $this->extend('layout/admin/admin_layout') ?>
+<?= $this->extend('backend/layout/admin/admin_layout') ?>
 
 <?= $this->section('cdn-head') ?>
-  <?= $this->include('assets/cdn/bs_css-46') ?>
-	<?= $this->include('assets/cdn/adminlte_css') ?>
+  <link rel="stylesheet" type="text/css" href="<?= base_url("asset/bs-4.6.2/css/bootstrap.min.css") ?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url("asset/admin-lte.3.2.0/css/adminlte.min.css") ?>">
 <?= $this->endSection('cdn-head') ?>
 
 <?= $this->section('cdn-foot') ?>
-  <?= $this->include('assets/cdn/jquery') ?>
-  <?= $this->include('assets/cdn/bs_js') ?>
-  <?= $this->include('assets/cdn/adminlte_js') ?>
+  <script src="<?= base_url("asset/js/jquery-3.7.0.min.js") ?>"></script>
+  <script src="<?= base_url("asset/bs-4.6.2/js/bootstrap.min.js") ?>"></script>
+  <script src="<?= base_url("asset/admin-lte.3.2.0/js/adminlte.min.js") ?>"></script>
 <?= $this->endSection('cdn-foot') ?>
 
 <?= $this->section('content') ?>

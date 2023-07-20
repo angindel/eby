@@ -1,5 +1,5 @@
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-light-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-primary elevation-4" id="sidebar-ail">
     <!-- Brand Logo -->
     <a href="<?= base_url('administrator/dashboard') ?>" class="brand-link">
       <img src="<?= base_url() ?>asset/images/Ebykarya-01.png" alt="Admin" class="brand-image elevation-3">
@@ -35,8 +35,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="<?= base_url('administrator/dashboard') ?>" class="nav-link active">
+          <li class="nav-item">
+            <a href="<?= base_url('administrator/dashboard') ?>" class="nav-link <?php echo (!isset($path)) ? '' : (($path == "dashboard") ? 'active' : ''); ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -44,7 +44,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url('administrator/transaksi') ?>" class="nav-link">
+            <a href="<?= base_url('administrator/transaksi') ?>" class="nav-link <?php echo (!isset($path)) ? '' : (($path == "transaksi") ? 'active' : ''); ?>">
               <i class="nav-icon fas fa-sharp fa-solid fa-shopping-cart"></i>
               <p>
                 Transaksi
@@ -52,7 +52,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url('administrator/stok') ?>" class="nav-link">
+            <a href="<?= base_url('administrator/stok') ?>" class="nav-link <?php echo (!isset($path)) ? '' : (($path == "stok") ? 'active' : ''); ?>">
               <i class="nav-icon fas fa-sharp fa-solid fa-list"></i>
               <p>
                 Stok
@@ -60,7 +60,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url('administrator/kategori') ?>" class="nav-link">
+            <a href="<?= base_url('administrator/kategori') ?>" class="nav-link <?php echo (!isset($path)) ? '' : (($path == "kategori") ? 'active' : ''); ?>">
               <i class="nav-icon fas fa-sharp fa-solid fa-th-list"></i>
               <p>
                 Kategori
@@ -68,7 +68,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url('administrator/produk') ?>" class="nav-link">
+            <a href="<?= base_url('administrator/produk') ?>" class="nav-link <?php echo (!isset($path)) ? '' : (($path == "produk") ? 'active' : ''); ?>">
               <i class="nav-icon fas fa-sharp fa-solid fa-barcode"></i>
               <p>
                 Produk
@@ -76,13 +76,55 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= route_to('admin.identitas') ?>" class="nav-link">
+            <a href="<?= route_to('admin.identitas') ?>" class="nav-link <?php echo (!isset($path)) ? '' : (($path == "identitas") ? 'active' : ''); ?>">
               <i class="nav-icon fas fa-sharp fa-solid fa-user"></i>
               <p>
                 Identitas
               </p>
             </a>
           </li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-book"></i>
+        <p>
+            Website
+            <i class="fas fa-angle-right right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="<?= base_url("administrator/aio/payment_channel") ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Payment Channel</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= base_url("administrator/aio/delivery_service") ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Delivery Service</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= base_url("administrator/aio/slide") ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Slide</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="pages/examples/faq.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>FAQ</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="pages/examples/contact-us.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Contact us</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
           <li class="nav-item">
             <a href="<?= base_url('administrator/logout') ?>" class="nav-link">
               <i class="nav-icon fas fa-solid fa-power-off"></i>

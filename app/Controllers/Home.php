@@ -9,6 +9,7 @@ use App\Models\MLogo;
 use App\Models\MPaymentChannel;
 use App\Models\MDeliveryService;
 use App\Models\MSlide;
+use CodeIgniter\Test\Fabricator;
 
 class Home extends BaseController
 {
@@ -101,6 +102,7 @@ class Home extends BaseController
         $m_produk = new MProduks();
         $this->web['produk'] = $m_produk->where('produk_seo', $name_seo)->first();
         $this->web['produk']->harga_konsumen = rupiah($this->web['produk']->harga_konsumen);
+        $this->web['produk_terkait'] = $m_produk->where('id_kategori_produk', $this->web['produk']->id_kategori_produk)->findAll(10);
         return view('frontend/Produk_detail', $this->web);
     }
 
@@ -110,5 +112,38 @@ class Home extends BaseController
         $this->web['kategori'] = $m_katpro->findAll();
         $this->web['id_kategori'] = $s;
         return view('frontend/Produk_kategori', $this->web);
+    }
+
+    public function fake()
+    {
+        // helper("local");
+        // $db = db_connect();
+        // $dt = $db->table('produk');
+        // $query = $dt->select('gambar,id_kategori_produk')->get();
+        // $gambar = $query->getResult('array');
+        // for($i=0; $i < 100; $i++)
+        // {
+        //     $faker = \Faker\Factory::create();
+        //     $name = $faker->name;
+        //     $data[] = [
+        //       'id_kategori_produk' => $gambar[$faker->randomDigit()]['id_kategori_produk'],
+        //       'nama_produk' => $name,
+        //       'produk_seo' => seo_title($name),
+        //       'satuan' => 'pcs',
+        //       'harga_beli' => $faker->randomNumber(5, true),
+        //       'harga_reseller' => $faker->randomNumber(5, true),
+        //       'harga_konsumen' => $faker->randomNumber(5, true),
+        //       'berat' => $faker->randomNumber(3, true),
+        //       'diskon' => 0,
+        //       'gambar' => $gambar[$faker->randomDigit()]['gambar'],
+        //       'keterangan' => $faker->text,
+        //       'username' => 'admin'
+        //     ];
+
+        // }
+        // $dt->insertBatch($data);
+
+        //$test = $fabricator->make();
+       //d($data);
     }
 }

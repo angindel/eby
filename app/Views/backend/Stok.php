@@ -1,4 +1,4 @@
-<?= $this->extend('layout/admin/dashboard_layout') ?>
+<?= $this->extend('backend/layout/admin/dashboard_layout') ?>
 <?= $this->section('link') ?>
 <link href="<?= site_url('asset/jquery-ui/jquery-ui.min.css') ?>" rel="stylesheet">
 <style type="text/css">
