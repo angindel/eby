@@ -24,7 +24,7 @@ class Pager extends BaseConfig
         'default_full'   => 'CodeIgniter\Pager\Views\default_full',
         'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
         'default_head'   => 'CodeIgniter\Pager\Views\default_head',
-        'bs_pagination' => 'App\Views\layout\home\pager',
+        'bs_pagination' => 'App\Views\frontend\layout\home\pager',
     ];
 
     /**
