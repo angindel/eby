@@ -64,13 +64,13 @@ $routes->group('administrator',['filter' => 'adminFilter'], function ($routes) {
     $routes->get('tes', [Administrator::class, 'admin_tes']);
 
     // GROUP HALAMAN PRODUK
-    $routes->group('produk', ['filter' => 'adminFilter'], static function ($routes){
-        $routes->get('/', [Administrator::class, 'produk']);
-        $routes->get('tambah', [Administrator::class, 'tambah_produk']);
-        $routes->post('proses_tambah', [Administrator::class, 'proses_produk']);
-        $routes->get('edit/(:num)', [Administrator::class, 'edit_produk/$1']);
-        $routes->post('proses_edit', [Administrator::class, 'proses_produk']);
-        $routes->get('delete/(:num)', [Administrator::class, 'delete_produk/$1']);
+    $routes->group('produk', ['namespace' => 'App\Controllers\Admin', 'filter' => 'adminFilter'], static function ($routes){
+        $routes->get('/', 'Produk::index');
+        $routes->get('tambah', 'Produk::tambah_produk');
+        $routes->post('proses_tambah', 'Produk::proses_produk');
+        $routes->get('edit/(:num)', 'Produk::edit_produk/$1');
+        $routes->post('proses_edit', 'Produk::proses_produk');
+        $routes->get('delete/(:num)', 'Produk::delete_produk/$1');
     });
 
     // GROUP HALAMAN PAYMENT CHANNEL, DELIVERY SERVICE, DAN SLIDE
