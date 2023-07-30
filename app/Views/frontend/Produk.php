@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>page</title>
-    <?= $this->include('assets/local/bs_css-5.3.0') ?>
+    <?= $this->include('assets/local/bs_css-530') ?>
     <style type="text/css">
         .pagination {
             margin-top: 5px;

@@ -10,6 +10,7 @@ use App\Models\MPaymentChannel;
 use App\Models\MDeliveryService;
 use App\Models\MSlide;
 use CodeIgniter\Test\Fabricator;
+//use CodeIgniter\I18n\Time;
 
 class Home extends BaseController
 {
@@ -33,7 +34,14 @@ class Home extends BaseController
         $this->web['kategori'] = $m_katpro->findAll();
         //$this->web['produk_new'] = $m_produk->orderBy('created_at', 'DESC')->limit(9)->find();
         $db = db_connect();
-        $q = $db->query('select m.id_mtran, m.id_produk, p.nama_produk, p.produk_seo, p.gambar, p.harga_konsumen, sum(m.qty) as qty from mtran as m inner join produk as p on m.id_produk=p.id_produk group by p.nama_produk order by qty desc limit 9');
+        $produk_new = $db->table('mtran as m');
+        $produk_new->select('m.id_mtran, m.id_produk, p.nama_produk, p.produk_seo, p.gambar, p.harga_konsumen, sum(m.qty) as qty')
+            ->join('produk as p', 'm.id_produk = p.id_produk', 'inner')
+            ->groupBy('p.nama_produk')
+            ->orderBy('qty', 'DESC')
+            ->limit(9);
+
+        $q = $produk_new->get();
         $this->web['produk_new'] = $q->getResult();
         $db->close();
         $this->web['pc'] = $m_pc->findAll();
@@ -118,9 +126,34 @@ class Home extends BaseController
     {
         // helper("local");
         // $db = db_connect();
-        // $dt = $db->table('produk');
-        // $query = $dt->select('gambar,id_kategori_produk')->get();
-        // $gambar = $query->getResult('array');
+        // $produk = $db->table('mtran as m');
+        // 'select m.id_mtran, m.id_produk, p.nama_produk, p.produk_seo, p.gambar, p.harga_konsumen, sum(m.qty) as qty from mtran as m inner join produk as p on m.id_produk=p.id_produk group by p.nama_produk order by qty desc limit 9'
+        // $produk->select('m.id_mtran, m.id_produk, p.nama_produk, p.produk_seo, p.gambar, p.harga_konsumen, sum(m.qty) as qty')
+        //     ->join('produk as p', 'm.id_produk = p.id_produk', 'inner')
+        //     ->groupBy('p.nama_produk')
+        //     ->orderBy('qty', 'DESC')
+        //     ->limit(9);
+        
+        // $query = $produk->get();
+        // foreach($query->getResult() as $row)
+        // {
+        //     $data[] = $row->nama_produk;
+        // }
+        // d($data);
+        // $produk = $db->table('produk');
+        // $query = $produk->select('id_produk,nama_produk')->get();
+        // $gambar = $query->getResult();
+        // $stok = $db->table('stok');
+        // foreach($gambar as $row)
+        // {
+        //     $myTime = new Time('now');
+        //     $data[] = [
+        //         'id_produk' => $row->id_produk,
+        //         'nama' => $row->nama_produk,
+        //         'created_at' => $myTime
+        //     ];
+        // }
+        // $stok->insertBatch($data);
         // for($i=0; $i < 100; $i++)
         // {
         //     $faker = \Faker\Factory::create();

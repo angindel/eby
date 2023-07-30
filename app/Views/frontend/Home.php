@@ -2,7 +2,7 @@
 <?= $this->extend('frontend/layout/home/home_layout') ?>
 
 <?= $this->section('cdn-head') ?>
-    <?= $this->include('assets/local/bs_css-5.3.0') ?>
+    <?= $this->include('assets/local/bs_css-530') ?>
     <?= $this->include('assets/local/style-local') ?>
     <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.carousel.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.theme.default.min.css") ?>">
@@ -10,7 +10,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('cdn-foot') ?>
-    <?= $this->include('assets/local/bs_js-5.3.0') ?>
+    <?= $this->include('assets/local/bs_js-530') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>

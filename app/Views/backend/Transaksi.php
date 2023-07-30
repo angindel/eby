@@ -303,6 +303,7 @@
     });
 
     // AUTOCOMPLETE-NAMA-PRODUK
+    var _total;
     $("#nama_t").autocomplete({
       minLength: 3,
       source:function(request, response){
@@ -330,11 +331,19 @@
         $("#id_produk_t").val(ui.item.value);
         $("#qty_t").val(1);
         $("#total_t").val(ui.item.harga);
+        _total = ui.item.harga;
         return false;
       },
       appendTo: "#clist",
     });
     // END-AUTOCOMPLETE-NAMA-PRODUK
+    $("#qty_t").on("change paste keyup", function() {
+      var _v = $(this);
+      if( !(!$.trim($("#qty_t").val()))  )
+      {
+         $("#total_t").val(_total * _v.val());
+      }
+    });
 
     // PROSES-TAMBAH-DATA-TRANSAKSI
     $('#simpan').on('click', function(e) {
