@@ -24,7 +24,7 @@ class Validation extends BaseConfig
         Rules::class,
         FormatRules::class,
         FileRules::class,
-        CreditCardRules::class,
+        // CreditCardRules::class,
     ];
 
     /**
@@ -36,6 +36,7 @@ class Validation extends BaseConfig
     public array $templates = [
         'list'   => 'CodeIgniter\Validation\Views\list',
         'single' => 'CodeIgniter\Validation\Views\single',
+        'produk_list' => 'App\Views\errors\validation\produk_list'
     ];
 
     // --------------------------------------------------------------------
