@@ -9,9 +9,22 @@
     display: none;
   }
   .ui-widget-overlay {
-  opacity: 0.9;
-  background-color: black;
-}
+    opacity: 0.9;
+    background-color: black;
+  }
+
+  .ui-autocomplete {
+    max-height: 150px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 150px;
+  }
 </style>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
@@ -112,7 +125,7 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('script') ?>
-<script src="<?= site_url('asset/jquery-ui/jquery-ui.min.js') ?>"></script>
+<script src="<?= site_url('asset/jquery-ui/jquery-ui.js') ?>"></script>
 <script type="text/javascript">
   let csrf = $('.mtcsrf');
   let csrfName = csrf.attr('name');
@@ -303,27 +316,114 @@
     });
 
     // AUTOCOMPLETE-NAMA-PRODUK
+    var offsetAutoCompleteAjax = 0;
+    var endScroll = false;
+   
+
+
+    $.widget( "ui.autocomplete", $.ui.autocomplete, {
+      options:{
+        scroll: false,
+      },
+      _create: function(){
+        this._superApply( arguments );
+        this._on( this.menu.element, {
+          
+          scroll: function( event ) {
+            if (this.options.scroll)
+            {
+              let that = this;
+              if (this.menu.active)
+              {
+                event.preventDefault();
+                var scrollTop = $(event.target).scrollTop();
+                if(scrollTop + $(event.target).innerHeight() >= event.target.scrollHeight && !endScroll)
+                {
+                  csrfHash = csrf.val();
+                  $.ajax({
+                    url: "<?= route_to('produk.nama') ?>",
+                    type:'post',
+                    dataType: 'json',
+                    data: {
+                      nama_s: $("#nama_t").val(),
+                      offset: offsetAutoCompleteAjax,
+                      [csrfName]: csrfHash
+                    },
+                    success: function(data){
+                      ++offsetAutoCompleteAjax;
+                      endScroll = data.end;
+                      if(data.data)
+                      {
+                        let ui = that._normalize(data.data);
+                        var ul = that.menu.element;
+                        that._renderMenu( ul, ui );
+                        that.menu.refresh();
+                        ul.show();
+                        that._resizeMenu();
+                        that._on( that.document, {
+                          mousedown: "_closeOnClickOutside"
+                        } );
+
+                      }
+                      csrf.val(data.token);
+                      
+                      // ul.position( $.extend( {
+                      //   of: that.element
+                      // }, that.options.position ) );
+                      // if ( that.options.autoFocus ) {
+                      //   that.menu.next();
+                      // }
+
+                      // Listen for interactions outside of the widget (#6642)
+                      
+                      // that._trigger( "scroll", event, {items: ui} );
+                    },
+                    // error: function(dxhr, ts, et){
+                    //   data = JSON.parse(et);
+                    //   csrf.val(data.token);
+                    //   endScroll = data.end;
+                    // }
+                  });
+                }
+              }
+
+            }
+          },
+        } );
+      },
+    });
     var _total;
     $("#nama_t").autocomplete({
-      minLength: 3,
+      minLength: 0,
+      scroll: true,
       source:function(request, response){
         csrfHash = csrf.val();
+        offsetAutoCompleteAjax = 0;
         $.ajax({
           url: "<?= route_to('produk.nama') ?>",
           type:'post',
           dataType: 'json',
           data: {
             nama_s: request.term,
+            offset: offsetAutoCompleteAjax,
             [csrfName]: csrfHash
           },
           success: function(data){
+            offsetAutoCompleteAjax += 1;
+            endScroll = false;
             csrf.val(data.token);
             response(data.data);
+          },
+          error: function(dxhr, ts, et){
+            data = JSON.parse(et);
+            csrf.val(data.token);
+            endScroll = false;
+            response( [] );
           }
         });
       },
       focus:function(event, ui){
-        $("#nama_t").val(ui.item.label);
+        // $("#nama_t").val(ui.item.label);
         return false;
       },
       select: function(event, ui){
@@ -335,6 +435,8 @@
         return false;
       },
       appendTo: "#clist",
+    }).focus(function() {
+        $(this).autocomplete("search", $(this).val());
     });
     // END-AUTOCOMPLETE-NAMA-PRODUK
     $("#qty_t").on("change paste keyup", function() {
@@ -344,6 +446,42 @@
          $("#total_t").val(_total * _v.val());
       }
     });
+
+
+    // $("ul.ui-autocomplete").on("scroll", function(){
+    //   var scrollTop = $(this).scrollTop();
+    //   if(scrollTop + $(this).innerHeight() >= this.scrollHeight)
+    //   {
+        // csrfHash = csrf.val();
+        
+        
+        // $.ajax({
+        //   url: "<?= route_to('produk.nama') ?>",
+        //   type: 'post',
+        //   dataType: 'json',
+        //   data: {
+        //     nama_s : $("#nama_t").val(),
+        //     [csrfName]: csrfHash
+        //   },
+        //   success: function(data)
+        //   {
+        //     csrf.val(data.token);
+        //     $.each(data.data, function(index, item){
+        //       $("ul.ui-autocomplete").append(`<li class="ui-menu-item"><div id="ui-id-${item.value}" tabindex="-1" onclick='select_dynamic_row(${item.value},${item.label},${item.harga})' class="ui-menu-item-wrapper">${item.label}</div></li>`)
+        //     });
+        //   }
+        // });
+    //   }
+      
+    // });
+
+    // function select_dynamic_row(id,label,harga){
+    //   $("#nama_t").val(label);
+    //   $("#id_produk_t").val(id);
+    //   $("#qty_t").val(1);
+    //   $("#total_t").val(harga);
+    //   _total = harga;
+    // }
 
     // PROSES-TAMBAH-DATA-TRANSAKSI
     $('#simpan').on('click', function(e) {
@@ -381,7 +519,12 @@
       $('#nama_t').val("");
       $('#qty_t').val("");
       $('#total_t').val("");
+      $("#nama_t").trigger("focus");
     });
+    $('#modaltran').on('shown.bs.modal', function(e){
+      $("#nama_t").trigger("focus");
+    });
+
 
     // END-PROSES-TAMBAH-DATA-TRANSAKSI
 
