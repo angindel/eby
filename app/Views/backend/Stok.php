@@ -9,9 +9,58 @@
     display: none;
   }
   .ui-widget-overlay {
-  opacity: 0.9;
-  background-color: black;
-}
+    opacity: 0.9;
+    background-color: black;
+  }
+
+  #tabel_serverside > thead > tr > th
+  {
+    font-size: 0.8em;
+    font-weight: bold;
+    padding: 10px 0;
+    margin: 0;
+    text-align: center;
+  }
+  #tabel_serverside > thead > tr > th:nth-child(1)
+  {
+    text-align: left;
+    padding-left: 5px;
+  }
+
+  #tabel_serverside > tbody > tr > td
+  {
+    font-size: 0.8em;
+    font-weight: 500;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  #tabel_serverside > tbody > tr > td:nth-child(2)
+  {
+    text-align: left;
+    max-width: 100px;
+    white-space: nowrap;
+    padding: 5px 5px 0 10px;
+  }
+  #tabel_serverside > tbody > tr > td:nth-child(2) div
+  {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding-bottom: 17px;
+    box-sizing: content-box;
+    scrollbar-color: blue white;
+    scrollbar-width: auto;
+  }
+
+  #tabel_serverside > tbody > tr > td:nth-child(7)
+  {
+    padding-left: 5px;
+  }
+
+  #tabel_serverside > tbody > tr:hover
+  {
+    background-color: rgba(9, 209, 255, 0.64);
+  }
 </style>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
@@ -33,7 +82,7 @@
     <div class="form-group row">
       <label for="total" class="col-2 col-form-label">Stok Akhir</label>
       <div class="col-10">
-        <input type="text" name="total" id="stoke-e" class="form-control text ui-widget-content">
+        <input type="text" name="total" id="stoke-e" class="form-control text ui-widget-content" disabled>
       </div>
     </div>
  
@@ -60,7 +109,9 @@
                         <th>Nama Produk</th>
                         <th>Stok Awal</th>
                         <th>Stok Akhir</th>
-                        <th></th>
+                        <th>Dibuat</th>
+                        <th>Diperbarui</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                 </table>
@@ -89,20 +140,38 @@
         {
           targets: [0],
           data : 'no',
+          orderable: false,
+          width: '5%'
         },
         {
           targets: [1],
           data : 'nama',
+          render: function ( data, type, row ) {
+            return '<div>' + data + '</div>';
+          },
+          width: '30%'
         },
         {
           targets: [2],
           data : 'stok_awal',
-          title : 'Stok Awal'
+          title : 'Stok Awal',
+          width: '5%'
         },
         {
           targets: [3],
           data : 'stok_akhir',
-          title : 'Stok Akhir'
+          title : 'Stok Akhir',
+          width: '5%'
+        },
+        {
+          targets: [4],
+          data : 'created_at',
+          title : 'Dibuat'
+        },
+        {
+          targets: [5],
+          data : 'updated_at',
+          title : 'Diperbarui'
         },
         {
           data:'id_stok',
@@ -131,7 +200,7 @@
         },
         error: function(){  // error handling
           $(".tabel_serverside-error").html("");
-          $("#tabel_serverside").append('<tbody class="tabel_serverside-error"><tr><th colspan="5">Data Tidak Ditemukan di Server</th></tr></tbody>');
+          $("#tabel_serverside").append('<tbody class="tabel_serverside-error"><tr><th colspan="7">Data Tidak Ditemukan di Server</th></tr></tbody>');
           $(".dataTables_processing").css("display","none");
         },
       },
@@ -200,7 +269,7 @@
       var id = $('#id-e').val();
       var nama = $('#nama-e').val();
       var qty = $('#stoks-e').val();
-      var total = $('#stoke-e').val();
+      // var total = $('#stoke-e').val();
       csrfHash = csrf.val();
        $.ajax({
           url: "<?= site_url('administrator/ajdt/stok/edit') ?>",
@@ -209,7 +278,7 @@
             id : id,
             nama : nama,
             stok_awal : qty,
-            stok_akhir : total,
+            // stok_akhir : total,
             [csrfName]: csrfHash
           },
           success: function(data){
