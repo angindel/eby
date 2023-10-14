@@ -42,4 +42,93 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+
+    public array $produk = [
+            'kategori_produk' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi'
+                ]
+            ],
+            'nama_produk' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi'
+                ]
+            ],
+            'harga_beli' => [
+                'rules' => 'required|decimal',
+                'errors' => [
+                    'required' => 'Harus di isi',
+                    'decimal' => 'Harus berupa angka'
+                ]
+            ],
+            'harga_reseller' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi',
+                    'decimal' => 'Harga Reseller harus berupa angka'
+                ]
+            ],
+            'harga_konsumen' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi',
+                    'decimal' => 'harus berupa angka'
+                ]
+            ],
+            'satuan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi',
+                    'decimal' => 'harus berupa angka'
+                ]
+            ],
+            'stok' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi',
+                    'decimal' => 'harus berupa angka'
+                ]
+            ],
+            'berat' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi'
+                ]
+            ],
+            'warna' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi'
+                ]
+            ],
+            'size' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi'
+                ]
+            ],
+            'keterangan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Harus di isi'
+                ]
+            ],
+        ];
+
+        public array $identitas = [
+            'nama_website' => 'required|min_length[5]|max_length[100]',
+            'email' => 'required|min_length[5]|max_length[100]',
+            'url' => 'required|min_length[5]|max_length[100]',
+            'facebook' => 'required',
+            'instagram' => 'required',
+            'no_telp' => 'required|min_length[5]|max_length[100]',
+            'kota_id' => 'required',
+            'alamat' => 'required',
+            'meta_deskripsi' => 'required|min_length[10]|max_length[250]',
+            'meta_keyword' => 'required|min_length[10]|max_length[250]',
+            'favicon' => 'uploaded[favicon]|is_image[favicon]',
+            'maps' => 'required'
+        ];
 }
