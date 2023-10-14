@@ -134,12 +134,12 @@ ailsystem/
 /README.md
 #app.old/
 #/composer.json
-/phpunit.xml.dist
+#/phpunit.xml.dist
 /preload.php
 /produk.sql
 /ebykaryabase*.sql
 public/
-spark
+#spark
 system/
 #tests/
 #writable/
