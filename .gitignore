@@ -131,7 +131,7 @@ nb-configuration.xml
 #/.env
 ailsystem/
 /LICENSE
-/README.md
+#/README.md
 #app.old/
 #/composer.json
 #/phpunit.xml.dist
