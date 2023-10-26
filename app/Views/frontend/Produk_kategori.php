@@ -3,23 +3,25 @@
 
 <?= $this->section('cdn-head') ?>
     <?= $this->include('assets/local/bs_css-530') ?>
+    <?= $this->include('assets/local/style-local') ?>
+    <?= $this->include('assets/local/fa-6.4.0') ?>
     <link rel="stylesheet" type="text/css" href="<?= base_url('asset/css/style-local.css') ?>">
     <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.carousel.min.css") ?>">
-<link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.theme.default.min.css") ?>">
-<style type="text/css">
- .page-load-status {
-  display: none; /* hidden by default */
-  padding-top: 20px;
-  border-top: 1px solid #DDD;
-  text-align: center;
-  color: #777;
-}
-#head-slide  .item img{
-    display: block;
-    width: 100%;
-    height: auto;
-}
-</style>
+    <link rel="stylesheet" href="<?= base_url("owlcarousel/dist/assets/owl.theme.default.min.css") ?>">
+    <style type="text/css">
+     .page-load-status {
+      display: none; /* hidden by default */
+      padding-top: 20px;
+      border-top: 1px solid #DDD;
+      text-align: center;
+      color: #777;
+    }
+    #head-slide  .item img{
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    </style>
 <?= $this->endSection() ?>
 
 <?= $this->section('cdn-foot') ?>
@@ -27,27 +29,8 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<body>
-<nav class="navbar sticky-top navbar-expand-md bg-light" data-bs-theme="light">
-    <?= $this->include('frontend/layout/home/navbar') ?>
-</nav>
-
-<nav class="navbar navbar-expand-sm d-none d-md-block" style="background-color: #d63384 ;">
-    <div class="container-fluid">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">Disabled</a>
-        </li>
-      </ul>
-  </div>
-    
-</nav>
+<body style="background-color:#ffdff2;">
+<?= $this->include('frontend/layout/home/navbar') ?>
 
 <main class="container-fluid">
     <!-- KATEGORI -->
@@ -94,24 +77,24 @@
     <!-- END KONTEN -->
 
     <div class="row">
-      <div class="col-md-12 col-lg-6 border border-top-0 border-dark-subtle my-2">
+      <div class="col-md-12 col-lg-6 my-2">
           <div class="row">
-              <div class="col-12">PAYMENT CHANNEL</div>
-              <div class="col-2">BCA</div>
-              <div class="col-2">MANDIRI</div>
-              <div class="col-2">BRI</div>
-              <div class="col-2">BNI</div>
-              <div class="col-2">OVO</div>
-              <div class="col-2">GOPAY</div>
-              <div class="col-2">DANA</div>
+              <div class="col-12"><span class="fs-5 fw-bold" style="color: #e1609b;">PAYMENT CHANNEL</span></div>
+              <?php foreach($pc as $row) { ?>
+              <div class="col-2">
+                <img src="<?= base_url("uploads/payment_channel/$row->gambar") ?>" class="img-thumbnail">
+              </div>
+              <?php } ?>
           </div>
       </div>
-      <div class="col-md-12 col-lg-6 border border-top-0 border-dark-subtle my-2">
+      <div class="col-md-12 col-lg-6 my-2">
           <div class="row">
-              <div class="col-12">Delivery Service</div>
-              <div class="col-2">JNE</div>
-              <div class="col-2">J&T</div>
-              <div class="col-2">TIKI</div>
+              <div class="col-12"><span class="fs-5 fw-bold" style="color: #e1609b;">DELIVERY SERVICE</span></div>
+              <?php foreach($ds as $row) { ?>
+              <div class="col-2">
+                <img src="<?= base_url("uploads/delivery_service/$row->gambar") ?>" class="img-thumbnail">
+              </div>
+              <?php } ?>
           </div>
       </div>
     </div>
@@ -124,7 +107,7 @@
         let $maininfscroll = $('#post-infscroll').infiniteScroll({
               // options
               path: function(){
-                return `<?= base_url() ?>tes/${this.loadCount + 1}/<?= $id_kategori ?>`;
+                return `<?= base_url() ?>tes/<?= $id_kategori ?>/${this.loadCount + 1}`;
               },
               append: false,
               history: false,

@@ -1,51 +1,68 @@
-<div class="container-fluid">
-  <div class="d-flex justify-content-between">
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand flex-sm-grow-1 flex-md-grow-0" href="<?= base_url() ?>"><img height=40px src="<?= base_url()."asset/images/".$logo."" ?>"/></a>
-    <form class="d-flex" role="search">
-      <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-    </div>
-    <!-- OFFCANVAS -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body">
+<header class="sticky-top">
+    <!-- <nav class="navbar sticky-top navbar-expand-md bg-light" data-bs-theme="light"> -->
 
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item d-md-none">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item d-md-none">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown d-md-none">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
+    <!-- </nav> -->
+    <nav class="navbar d-none d-md-block py-0" style="background-color:#ffdff2;font-size: 14px; min-height: 35px;">
+        <div class="container justify-content-start">
+
+          <a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>" rel="bookmark">
+            <img width="55px" height="50px" src="<?= base_url()."asset/images/".$logo."" ?>" alt="EbyKarya">
+            <h1 style="text-indent:-999999px;margin:0;padding:0">EbyKarya Tempat Jual Beli Online Pakaian Celana Topi Jam Aksesoris Untuk Laki - Laki dan Perempuan Anak - anak Remaja Dewasa Terlengkap</h1>
+          </a>
+
+          <form role="search" class="d-flex me-2 float-start" action="" method="get">
+            <input class="form-control me-0" placeholder="Cari Produk" autocomplete="off" type="search">
+            <button type="submit" class="btn btn-md btn-primary">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+
+            <div class="d-flex flex-fill">
+              <ul id="top-nav-list" class="nav ms-auto">
+                  <li class="nav-item">
+                    <?php if(auth()->loggedIn()) : ?>
+                      <a href="<?= base_url('/user/dashboard') ?>" class="btn btn-md btn-warning">Akun</a>
+                      <a href="<?= base_url('/user/logout') ?>" class="btn btn-md btn-danger">Keluar</a>
+                    <?php else : ?>
+                      <a href="<?= base_url('/login') ?>" class="btn btn-md btn-primary">Login / Register</a>
+                    <?php endif ?>
+                  </li>
+              </ul>
+          </div>
+        </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-md" style="background-color: #557ef9 ;">
+        <div class="container-fluid">
+          <button id="nt" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="<?= base_url() ?>" rel="bookmark" class="d-block d-sm-block d-md-none">
+            <img height="50px" src="<?= base_url("asset/images/Ebykarya-05.png") ?>">
+          </a>
+          <div class="d-flex justify-content-end">
+            <?php if(auth()->loggedIn()) : ?>
+            <a href="<?= base_url('/user/dashboard') ?>" class="btn btn-md btn-warning d-block d-sm-block d-md-none">Akun</a>
+            <a href="<?= base_url('/user/logout') ?>" class="btn btn-md btn-danger d-block d-sm-block d-md-none">Logout</a>
+          <?php else : ?>
+            <a href="<?= base_url('/login') ?>" class="btn btn-md btn-primary d-block d-sm-block d-md-none">Login</a>
+          <?php endif ?>
+          </div>
+          <div class="collapse navbar-collapse bg-body-dark" id="navbarTogglerDemo01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="<?= base_url() ?>"><i class="fa fa-home"></i> Home</a>
               </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-list"></i> Kategori</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"><i class="fa fa-star"></i> Populer</a>
+              </li>
             </ul>
-          </li>
-          <div class="row">
-          <div class="col nav-item d-md-block m-0 p-0 me-2">
-             <button type="button" class="btn btn-sm btn-success p-2 w-100">DAFTAR</button>
           </div>
-          <div class="col nav-item d-md-block m-0 p-0">
-             <button type="button" class="btn btn-sm btn-primary p-2 w-100">LOGIN</button>
-          </div>
-          </div>
-        </ul>
       </div>
-    </div>
-  </div>
+        
+    </nav>
+  </header>

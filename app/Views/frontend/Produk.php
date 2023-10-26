@@ -41,27 +41,45 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div id="produk-inf" class="row row-cols-3 row-cols-md-5">
+        <div id="produk-inf" class="row row-cols-3 row-cols-md-6">
         <?php foreach($produk as $row): ?>
         <div class="col px-1 mb-1 infscroll-item mb-3">
-            <div class="shadow card h-100 border border-0 p-0 bg-body-tertiary rounded">
-                <a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>">
-                    <img src="<?= base_url("uploads/produk/{$row->gambar}") ?>" class="card-img-top" alt="...">
-                </a>
+            <div class="card h-100 border border-0 p-0 bg-body-tertiary rounded">
+                <a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>" style="text-decoration:none;">
+                <img src="<?= base_url("uploads/produk/{$row->gambar}") ?>" class="card-img-top" alt="...">
                 <div class="card-body p-0 m-1">
-                    <h5 class="card-title">Rp. <?= $row->harga_konsumen ?></h5>
-                    <a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>" style="text-decoration: none;"><h3 class="card-text lh-sm caption-pb"><?= $row->nama_produk ?></h3></a>
+                    <div class="card-title">
+                        <div class="card-text nama-produk"><?= $row->nama_produk ?></div>
+                    </div>
+                    <div class="vharga-satu caption-pb">
+                        <span>
+                            Rp. <?= $row->harga_konsumen ?>
+                        </span>
+                    </div>
+                    <div class="vharga-dua p-0 m-0 w-100">
+                        <span class="harga-diskon" style="text-decoration:line-through;">
+                            Rp. <?= $row->harga_konsumen ?>
+                        </span>
+                        <span class="diskon">-50%</span>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <i class="fa fa-star fa-2xs" style="color:#faca51;"></i>
+                            <i class="fa fa-star fa-2xs" style="color:#faca51;"></i>
+                            <i class="fa fa-star fa-2xs" style="color:#faca51;"></i>
+                            <i class="fa fa-star fa-2xs" style="color:#faca51;"></i>
+                            <i class="fa fa-star fa-2xs" style="color:#faca51;"></i>
+                        </div>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush text-center border border-0">
-                    <li class="list-group-item p-0 m-1"><a href="<?= base_url("produk/detail/{$row->produk_seo}") ?>" class="btn btn-primary btn-sm">Lihat Detail</a></li>
-                </ul>
+                </a>
             </div>
         </div>
         <?php endforeach; ?>
     </div>
     <div id="button-more" class="row">
         <div class="col text-center">
-            <button class="btn btn-lg btn-primary view-more-produk-button">Lihat Lebih Banyak</button>
+            <button class="btn btn-lg btn-outline-primary view-more-produk-button">Muat Lebih Banyak</button>
         </div>
     </div>
     <?= $pager ?>
