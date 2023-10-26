@@ -1,4 +1,14 @@
 <style type="text/css">
+
+#navbarTogglerDemo01 > ul > li > a {
+	color: #fff;
+	font-weight: bold;
+}
+
+#nt {
+	background-color: #fff;
+}
+
 @font-face {
 	font-family: Roboto;
 	src: url("http://ebykarya.local/asset/Roboto/Roboto-Regular.ttf");
@@ -132,6 +142,151 @@
 	margin: 0;
 	text-shadow: 2px -1px 4px #fff;
 	text-align: center;
+}
+
+.loader-ellips {
+  font-size: 20px; /* change size here */
+  position: relative;
+  width: 4em;
+  height: 1em;
+  margin: 10px auto;
+}
+
+.loader-ellips__dot {
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.5em;
+  background: #555; /* change color here */
+  position: absolute;
+  animation-duration: 0.5s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
+
+.loader-ellips__dot:nth-child(1),
+.loader-ellips__dot:nth-child(2) {
+  left: 0;
+}
+.loader-ellips__dot:nth-child(3) { left: 1.5em; }
+.loader-ellips__dot:nth-child(4) { left: 3em; }
+
+@keyframes reveal {
+  from { transform: scale(0.001); }
+  to { transform: scale(1); }
+}
+
+@keyframes slide {
+  to { transform: translateX(1.5em) }
+}
+
+.loader-ellips__dot:nth-child(1) {
+  animation-name: reveal;
+}
+
+.loader-ellips__dot:nth-child(2),
+.loader-ellips__dot:nth-child(3) {
+  animation-name: slide;
+}
+
+.loader-ellips__dot:nth-child(4) {
+  animation-name: reveal;
+  animation-direction: reverse;
+}
+
+.scroller-status__message {
+  text-align: center;
+  color: #777;
+}
+
+#go-top {
+  opacity: 0;
+  position: fixed;
+  bottom: 30px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: 0;
+  background-color: #d63384;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 18px;
+}
+
+@media (max-width: 575.98px) {
+	.fs-1 {
+	  font-size: calc(0.975rem + 1.5vw) !important;
+	}
+
+	.fs-2 {
+	  font-size: calc(0.925rem + 0.9vw) !important;
+	}
+
+	.fs-3 {
+	  font-size: calc(0.9rem + 0.6vw) !important;
+	}
+
+	.fs-4 {
+	  font-size: calc(0.875rem + 0.3vw) !important;
+	}
+
+	.fs-5 {
+	  font-size: 0.85rem !important;
+	}
+
+}
+
+@media (max-width: 767.98px) {
+	#go-top {
+		padding: 1px 5px;
+		bottom: 10px;
+	}
+}
+
+@media (min-width: 576px) {
+	.fs-1 {
+	  font-size: calc(0.975rem + 1.5vw) !important;
+	}
+
+	.fs-2 {
+	  font-size: calc(0.925rem + 0.9vw) !important;
+	}
+
+	.fs-3 {
+	  font-size: calc(0.9rem + 0.6vw) !important;
+	}
+
+	.fs-4 {
+	  font-size: calc(0.875rem + 0.3vw) !important;
+	}
+
+	.fs-5 {
+	  font-size: 0.85rem !important;
+	}
+}
+
+
+@media (min-width: 768px) {
+	.fs-1 {
+	  font-size: calc(1.175rem + 1.5vw) !important;
+	}
+
+	.fs-2 {
+	  font-size: calc(1.125rem + 0.9vw) !important;
+	}
+
+	.fs-3 {
+	  font-size: calc(1.1rem + 0.6vw) !important;
+	}
+
+	.fs-4 {
+	  font-size: calc(1.075rem + 0.3vw) !important;
+	}
+
+	.fs-5 {
+	  font-size: 1.05rem !important;
+	}
 }
 
 </style>
