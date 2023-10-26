@@ -92,3 +92,13 @@ define('EVENT_PRIORITY_NORMAL', 100);
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
 define('EVENT_PRIORITY_HIGH', 10);
+
+
+# dinamis base url
+// $base = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']) : 'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']);
+// defined('BASE') || define('BASE', $base);
+
+# Google OAuth
+defined('GOOGLE_CLIENT_ID') || define('GOOGLE_CLIENT_ID', '502014206466-1spcpvr2g6mvgtir6g30036ih6lujuj5.apps.googleusercontent.com');
+defined('GOOGLE_CLIENT_SECRET') || define('GOOGLE_CLIENT_SECRET', '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');
+defined('GOOGLE_REDIRECT_URI') || define('GOOGLE_REDIRECT_URI', 'http://localhost/auth/google/login');
