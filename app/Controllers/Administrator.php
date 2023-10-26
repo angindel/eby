@@ -10,6 +10,8 @@ use App\Models\MKategoriProduk;
 use App\Models\MTransaksi;
 use App\Models\MDatatables;
 use App\Models\MIdentitas;
+use App\Models\MStok;
+use CodeIgniter\Database\RawSql;
 
 class Administrator extends BaseController
 {
@@ -86,6 +88,16 @@ class Administrator extends BaseController
                 'mtran' => $db->table('mtran')->countAll(),
                 'produk' => $db->table('produk')->countAll(),
                 'kategori_produk' => $db->table('kategori_produk')->countAll(),
+                'transaksi' => [
+                    'hariini' => $db->table('mtran')->selectSum('total')->where(new RawSql("DATE_FORMAT(created_at ,'%Y-%m-%d') = curdate()"))->limit(1, 0)->get()->getFirstRow(),
+                    'mingguini' => $db->table('mtran')->selectSum('total')->where(new RawSql("WEEK(created_at)=WEEK(CURDATE())"))->limit(1, 0)->get()->getFirstRow(),
+                    'bulanini' => $db->table('mtran')->selectSum('total')->where( new RawSql("created_at between  DATE_FORMAT(CURDATE() ,'%Y-%m-01') AND CURDATE()") )->limit(1, 0)->get()->getFirstRow(),
+                    'bulanlalu' => $db->table('mtran')->selectSum('total')->where( new RawSql("month(created_at) = month(date_sub(curdate(), interval 1 month)) and year(created_at) = year(date_sub(curdate(), interval 1 month))") )->limit(1, 0)->get()->getFirstRow(),
+                    'tahunini' => $db->table('mtran')->selectSum('total')->where( new RawSql("YEAR(created_at)=YEAR(CURDATE())") )->limit(1, 0)->get()->getFirstRow(),
+                ]
+            ],
+            'data' => [
+                'transaksi' => $db->table('mtran')->limit(5)->orderBy('id_mtran', 'DESC')->get()->getResult(),
             ],
             'path' => end($this->data['path'])
         ];
@@ -93,104 +105,6 @@ class Administrator extends BaseController
         
     }
 
-
-    public function kategori()
-    {
-        $data['kategori_produk'] = $this->m_katpro->findAll();
-        $data['title'] = 'kategori';
-        $data['path'] = end($this->data['path']);
-        return view('backend/Kategori', $data);
-
-    }
-
-    public function edit_kategori($id)
-    {
-        helper('form');
-        $data['edit'] = $this->m_katpro->where('id_kategori_produk', $id)->first();
-        $data['title'] = 'edit_kategori';
-        return view('backend/Edit_kategori', $data);
-    }
-
-    public function proses_kategori()
-    {
-     helper('local');
-     $img = $this->request->getFile('gambar');
-     $dvalid = [
-        'nama_kategori' => ['rules' => 'required','errors' => ['required' => 'Nama Kategori Harus di isi']],
-        ];
-        if( !empty($img->getName()) )
-        {
-            $dvalid['gambar'] = ['rules' => 'uploaded[gambar]','is_image[gambar]','mime_in[gambar,image/jpg,image/jpeg,image/png,image/webp]','errors' => ['required' => 'Gambar Harus Di Input']];
-        }
-     if( !$this->validate($dvalid) )
-        {
-            session()->setFlashdata('error', $this->validator->listErrors());
-            return redirect()->back()->withInput();
-        }
-        $dr = $this->request->getVar();
-
-        $data = [
-            'nama_kategori' => $dr['nama_kategori'],
-        ];
-        if( !empty($img->getName()) )
-        {
-            $fileName = $img->getRandomName();
-            $data['gambar'] = $fileName;
-            $img->move(WRITEPATH . 'uploads/kategori/', $fileName);
-        }
-
-
-        $this->m_katpro->update($dr['id'], $data);
-        session()->setFlashdata('msg', 'Edit Data Kategori Berhasil');
-
-        return redirect()->to(base_url('administrator/kategori'));
-    }
-
-    public function tambah_kategori()
-    {
-        helper('form');
-        $data['title'] = 'tambah_kategori';
-        return view('backend/Tambah_kategori', $data);
-    }
-
-    public function proses_tambah_kategori()
-    {
-        helper('local');
-        if( !$this->validate([
-            'nama_kategori' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Nama Kategori Harus di isi'
-                ]
-            ]
-        ]) )
-        {
-            session()->setFlashdata('error', $this->validator->listErrors());
-            return redirect()->back()->withInput();
-        }
-        $img = $this->request->getFile('gambar');
-
-        $data = [
-            'nama_kategori' => $this->request->getVar('nama_kategori'),
-            'kategori_seo' => seo_title($this->request->getVar('nama_kategori'))
-        ];
-
-        if( !empty($img->getName()) )
-        {
-            $fileName = $img->getRandomName();
-            $data['gambar'] = $fileName;
-            $img->move(WRITEPATH . 'uploads/kategori/', $fileName);
-        }
-        else
-        {
-            $data['gambar'] = NULL;
-        }
-
-
-        $this->m_katpro->insert($data);
-        session()->setFlashdata('msg', 'Tambah Data Kategori Berhasil');
-        return redirect()->to(base_url('administrator/kategori'));
-    }
 
     public function transaksi()
     {
@@ -220,20 +134,8 @@ class Administrator extends BaseController
 
     public function edit_identitas()
     {
-        $rules = [
-            'nama_website' => 'required|min_length[5]|max_length[100]',
-            'email' => 'required|min_length[5]|max_length[100]',
-            'url' => 'required|min_length[5]|max_length[100]',
-            'facebook' => 'required',
-            'instagram' => 'required',
-            'no_telp' => 'required|min_length[5]|max_length[100]',
-            'kota_id' => 'required',
-            'alamat' => 'required',
-            'meta_deskripsi' => 'required|min_length[10]|max_length[250]',
-            'meta_keyword' => 'required|min_length[10]|max_length[250]',
-            'favicon' => 'uploaded[favicon]|is_image[favicon]',
-            'maps' => 'required'
-        ];
+        $validation = \Config\Services::validation();
+        $rules = $validation->getRuleGroup('identitas');
 
         if(!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
@@ -265,13 +167,11 @@ class Administrator extends BaseController
 
         if($s1 == 'mtran')
         {
-            $table = $s1;
+            $model = 'Mtran';
             $column_order = ['id_mtran', 'nama','total'];
             $column_search = ['nama'];
             $order = ['id_mtran', 'DESC'];
-            $primaryKey = 'id_mtran';
-            $allowedFields = ['id_produk','nama','qty','total'];
-            $dt = new MDatatables($table, $column_order, $column_search, $order, $primaryKey, $allowedFields);
+            $dt = new MDatatables($model, $column_order, $column_search, $order);
             $ts = ['id_mtran', 'nama', 'qty','total'];
             if(!is_null($s2))
             {
@@ -289,14 +189,12 @@ class Administrator extends BaseController
         }
         else if ($s1 == 'stok')
         {
-            $table = $s1;
-            $column_order = ['id_stok', 'nama','stok_awal', 'stok_akhir'];
+            $model = 'MStok';
+            $column_order = ['id_stok', 'nama','stok_awal', 'stok_akhir', 'created_at', 'updated_at'];
             $column_search = ['nama'];
             $order = ['id_stok', 'DESC'];
-            $primaryKey = 'id_stok';
-            $allowedFields = ['id_produk','nama','stok_awal','stok_akhir'];
-            $dt = new MDatatables($table, $column_order, $column_search, $order, $primaryKey, $allowedFields);
-            $ts = ['id_stok', 'nama', 'stok_awal','stok_akhir'];
+            $dt = new MDatatables($model, $column_order, $column_search, $order);
+            $ts = ['id_stok', 'nama', 'stok_awal','stok_akhir','created_at','updated_at'];
             if(!is_null($s2))
             {
                 $response = array();
@@ -313,25 +211,11 @@ class Administrator extends BaseController
         }
         else if ($s1 == 'produk')
         {
-            $table = $s1;
+            $model = 'ProdukBModel';
             $column_order = ['id_produk', 'nama_produk'];
             $column_search = ['nama_produk'];
             $order = ['id_produk', 'DESC'];
-            $primaryKey = 'id_produk';
-            $allowedFields = [
-                'nama_produk',
-                'produk_seo',
-                'satuan',
-                'harga_beli',
-                'harga_konsumen',
-                'harga_reseller',
-                'berat',
-                'diskon',
-                'gambar',
-                'keterangan',
-                'created_at'
-            ];
-            $dt = new MDatatables($table, $column_order, $column_search, $order, $primaryKey, $allowedFields);
+            $dt = new MDatatables($model, $column_order, $column_search, $order);
             $ts = ['id_produk', 'nama_produk', 'harga_beli','harga_reseller','harga_konsumen','satuan','berat'];
             if(!is_null($s2))
             {
@@ -345,6 +229,22 @@ class Administrator extends BaseController
                 {
                     json_encode(['code' => 1, 'msg' => 'ADO YANG SALAH CAKNYO']);
                 }
+            }
+        }
+        else if ($s1 == 'kategori')
+        {
+            $model = 'MKategoriProduk';
+            $column_order = ['id_kategori_produk', 'nama_kategori'];
+            $column_search = ['nama_kategori'];
+            $order = ['id_kategori_produk', 'DESC'];
+            $dt = new MDatatables($model, $column_order, $column_search, $order);
+            $ts = ['id_kategori_produk', 'nama_kategori', 'gambar'];
+            if(!is_null($s2))
+            {
+                $response = array();
+                $response['token'] = csrf_hash();
+                $response['msg'] = 'Amazing Spiderman';
+                return $this->response->setJSON($response);
             }
         }
         else
@@ -396,13 +296,16 @@ class Administrator extends BaseController
 
     private function crud_datatables($action, $rq, $dt)
     {
+        if (! $rq->is('post')) {
+            return $rq->setStatusCode(405)->setBody('Method Not Allowed');
+        }
         $postData = $rq->getPost();
         $response = array();
 
         $response['token'] = csrf_hash();
         if($action == 'hapus')
         {
-            $dt->delete($postData['id']);
+            $dt->hapus($postData['id']);
             return true;
         }
         else if($action == 'tambah')
@@ -412,7 +315,7 @@ class Administrator extends BaseController
             {
                 $data[$k] = $v;
             }
-            $dt->insert($data);
+            $dt->tambah($data);
             return true;
         }
         else if($action == 'edit')
@@ -424,7 +327,7 @@ class Administrator extends BaseController
                     $data[$k] = $v;
                 }
             }
-            $dt->update($postData['id'], $data);
+            $dt->edit($postData['id'], $data);
             return true;
         }
         else
@@ -435,34 +338,136 @@ class Administrator extends BaseController
 
     public function getProdukName()
     {
-        $request = \Config\Services::request();
-        $postData = $request->getPost();
+        if (! $this->request->is('post')) {
+            return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+        }
+        // AMBIL SEMUA DATA POST
+        $postData = $this->request->getPost();
 
+        // BUAT ARRAY VARIABLE UNTUK MENGIRIMKAN RESPONSE
         $response = array();
-
-        $response['token'] = csrf_hash();
+        $response['token'] = csrf_hash(); // TOKEN CSRF
         $data = array();
+        $nama_s = trim($postData['nama_s']);
 
-        if(isset($postData['nama_s'])){
-            $name = $postData['nama_s'];
+        if(isset($nama_s)){
+            $names = preg_match('/\s|\+/', $nama_s ) ? explode(" ", $nama_s) : $nama_s;
+            // $name = $postData['nama_s'];
+            $row_count = 6;
+            $offset = $postData['offset'];
+            $offset = $row_count * $offset;
 
-            $plists = $this->m_produk->select('id_produk,nama_produk,harga_konsumen,gambar')
-                    ->like('nama_produk', $name)
-                    ->orderBy('nama_produk')
-                    ->findAll(5);
-            foreach($plists as $plist){
-                $data[] = array(
-                    "value" => $plist->id_produk,
-                    "label" => $plist->nama_produk,
-                    "harga" => $plist->harga_konsumen,
-                    "gambar" => $plist->gambar,
-                );
+            // AMBIL DATA PRODUK DI DATABASE
+            $db = \Config\Database::connect();
+            // $querySql = "SELECT `p`.`id_produk`, `p`.`nama_produk`, `p`.`harga_konsumen`, `p`.`gambar`, `s`.`stok_akhir` FROM `produk` `p` INNER JOIN `stok` `s` ON `p`.`id_produk`=`s`.`id_produk`";
+            // al%' ESCAPE '!'\nORDER BY CASE\n                    WHEN nama_produk LIKE 'al%' then 1\n                    WHEN nama_produk LIKE '%al%' then 2\n                    ELSE 3\n                    END ASC\n LIMIT 6;"
+            $builder = $db->table('produk');
+            $builder->select('id_produk,nama_produk,harga_konsumen');
+
+            if(is_array($names))
+            {
+                $i = 1;
+                foreach($names as $name)
+                {
+                    ($i == 1) ? $builder->like('nama_produk', $name) : $builder->orLike('nama_produk', $name);
+                    // if ($i == 1)
+                    // {
+                    //     $querySql .= " WHERE `p`.`nama_produk` LIKE '%".  $db->escapeLikeString($name) . "%' ESCAPE '!'";
+                    // }
+                    // else
+                    // {
+                    //     $querySql = " OR LIKE '%".  $db->escapeLikeString($name) . "%' ESCAPE '!'";
+                    // }
+                    ++$i;
+                }
+                $i_nama_s = implode("%", $names);
+                $s_case = " CASE WHEN nama_produk LIKE '{$nama_s}%' then 1 WHEN nama_produk LIKE '%{$nama_s}%' then 2 WHEN nama_produk LIKE '%{$i_nama_s}%' then 3";
+                $s = 3;
+                foreach($names as $name)
+                {
+                    $s_case .= " WHEN nama_produk LIKE '{$name}%' then ".++$s;
+                    $s_case .= " WHEN nama_produk LIKE '%{$name}%' then ".++$s;
+                }
+                $s_case .= " ELSE ".++$s." END ASC";
+                // $querySql .= $s_case;
+                $builder->orderBy($s_case);
+            }
+            else
+            {
+                if( !empty($names) )
+                {
+                    // $querySql .= " WHERE `p`.`nama_produk` LIKE '%".  $db->escapeLikeString($names) . "%' ESCAPE '!' ";
+                    $builder->like('nama_produk', $names);
+                    // $querySql .= " ORDER BY CASE WHEN p.nama_produk LIKE '{$names}%' then 1 WHEN p.nama_produk LIKE '%{$names}%' then 2 ELSE 3 END ASC ";
+                    $builder->orderBy("CASE WHEN nama_produk LIKE '{$names}%' then 1 WHEN nama_produk LIKE '%{$names}%' then 2 ELSE 3 END ASC");
+                }
+                else
+                {
+                    // $querySql .= " ORDER BY p.nama_produk ASC";
+                    $builder->orderBy("nama_produk", "ASC");
+                }
+            }
+            // $querySql .= " LIMIT {$offset}, {$row_count}";
+            $builder->limit($row_count, $offset);
+            $sql = $builder->getCompiledSelect(false);
+            $query = $builder->get();
+            $res = $query->getResult();
+            // $query = $db->query($querySql);
+            $response['sql'] = $sql;
+
+            if(!empty($res))
+            {
+                foreach($res as $plist){
+                    $label = $plist->nama_produk;
+                    if(is_array($names))
+                    {
+                        foreach($names as $name)
+                        {
+                            $lo_name = strtolower($name);
+                            $up_name = strtoupper($name);
+                            $ucf_name = ucfirst($name);
+                            $label = str_replace($lo_name, "<b>{$lo_name}</b>", $label);
+                            $label = str_replace($up_name, "<b>{$up_name}</b>", $label);
+                            $label = str_replace($ucf_name, "<b>{$ucf_name}</b>", $label);
+                        }
+                    }
+                    else
+                    {
+                        if(!empty($names))
+                        {
+                            $lo_names = strtolower($names);
+                            $up_names = strtoupper($names);
+                            $ucf_names = ucfirst($names);
+                            $label = str_replace($lo_names, "<b>{$lo_names}</b>", $label);
+                            $label = str_replace($up_names, "<b>{$up_names}</b>", $label);
+                            $label = str_replace($ucf_names, "<b>{$ucf_names}</b>", $label);
+                        }
+                    }
+                    $data[] = array(
+                        "value" => $plist->id_produk,
+                        "label" => $plist->nama_produk,
+                        "lbl" => $label,
+                        "harga" => $plist->harga_konsumen,
+                        // "stok_akhir" => $plist->stok_akhir,
+                    );
+                }
+                $response["end"] = (count($data) <= 6) ? true : false;
+                $response['data'] = $data;
+            } else {
+                $response["end"] = true;
+                // return $this->response->setStatusCode(404, json_encode($response));
             }
         }
-        $response['data'] = $data;
 
         return $this->response->setJSON($response);
 
+    }
+
+    public function asa($id=null)
+    {
+        $m_stok = new MStok();
+        $sa = $m_stok->allowCallbacks(false)->select("stok_akhir")->where("id_produk", $id)->first();
+        return $this->response->setJSON($sa);
     }
 
     public function website_payment_channel()

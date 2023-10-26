@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use CodeIgniter\Controller;
-use App\Models\{MProduks, MKategoriProduk};
+use App\Models\{MProduks, MKategoriProduk, ProdukBModel};
 use CodeIgniter\I18n\Time;
 use CodeIgniter\API\ResponseTrait;
 
@@ -16,7 +16,7 @@ class Produk extends BaseController
 
     public function __construct()
     {
-        $this->m_produk = new MProduks();
+        $this->m_produk = new ProdukBModel();
         $this->m_katpro = new MKategoriProduk();
         $rq = \Config\Services::request();
         $this->data['path'] = explode('/', $rq->getPath());
@@ -24,7 +24,7 @@ class Produk extends BaseController
 
     public function index()
     {
-        $data['produk'] = $this->m_produk->orderBy('id_produk', 'DESC')->findAll();
+        // $data['produk'] = $this->m_produk->select("id_produk, id_kategori_produk, nama_produk, harga_beli, harga_reseller, harga_konsumen, satuan, berat")->orderBy('id_produk', 'DESC')->findAll();
         $data['kategori_produk'] = $this->m_katpro->orderBy('id_kategori_produk', 'DESC')->findAll();
         $data['title'] = 'Produk';
         $data['path'] = end($this->data['path']);
@@ -43,21 +43,15 @@ class Produk extends BaseController
     public function proses_produk()
     {
         helper('local');
-        $rules = [
-            'kategori_produk' => ['rules' => 'required','errors' => ['required' => 'Harus di isi']],
-            'nama_produk' => ['rules' => 'required','errors' => ['required' => 'Harus di isi']],
-            'harga_beli' => ['rules' => 'required|decimal','errors' => ['required' => 'Harus di isi', 'decimal' => 'Harus berupa angka']],
-            'harga_reseller' => ['rules' => 'required','errors' => ['required' => 'Harus di isi', 'decimal' => 'Harga Reseller harus berupa angka']],
-            'harga_konsumen' => ['rules' => 'required','errors' => ['required' => 'Harus di isi', 'decimal' => 'harus berupa angka']],
-            'satuan' => ['rules' => 'required','errors' => ['required' => 'Harus di isi', 'decimal' => 'harus berupa angka']],
-            'stok' => ['rules' => 'required','errors' => ['required' => 'Harus di isi', 'decimal' => 'harus berupa angka']],
-            'berat' => ['rules' => 'required','errors' => ['required' => 'Harus di isi']],
-            'warna' => ['rules' => 'required','errors' => ['required' => 'Harus di isi']],
-            'size' => ['rules' => 'required','errors' => ['required' => 'Harus di isi']],
-            'keterangan' => ['rules' => 'required','errors' => ['required' => 'Harus di isi']],
-        ];
+
+        // VALIDASI PRODUK
+        $validation = \Config\Services::validation();
+        $rules = $validation->getRuleGroup('produk');
+
+        // AMBIL SEMUA VARIABEL REQUEST
         $dr = $this->request->getVar();
 
+        // CHECK VARIABEL REQUEST tambah
         if( isset( $dr['tambah'] ) )
         {
             $rules['gambar'] = [
@@ -98,7 +92,8 @@ class Produk extends BaseController
             'keterangan' => $dr['keterangan'],
         ];
 
-        $res = [];
+        // VARIABEL RESPONSE
+        $res = array();
 
         $img = $this->request->getFile('gambar');
         if(!is_null($img))
@@ -167,8 +162,6 @@ class Produk extends BaseController
         helper('form');
         $data['kategori_produk'] = $this->m_katpro->orderBy('id_kategori_produk', 'DESC')->findAll();
         $data['edit'] = $this->m_produk->where('id_produk', $id)->first();
-        $data['edit']->warna = str_contains($data['edit']->warna, ',') ? explode(',', $data['edit']->warna) : $data['edit']->warna;
-        $data['edit']->size = str_contains($data['edit']->size, ',') ? explode(',', $data['edit']->size) : $data['edit']->size;
         $db = db_connect();
         $stok = $db->table('stok')->where('id_produk', $id)->get()->getRow();
         $data['edit']->stok = (int)$stok->stok_awal;
@@ -176,10 +169,17 @@ class Produk extends BaseController
         return view('backend/produk/Edit_produk', $data);
     }
 
-    public function delete_produk($id)
+    public function delete_produk()
     {
-        $this->m_produk->delete($id);
-        return redirect()->to(base_url('administrator/produk'));
+        if( !$this->request->is('post') )
+        {
+            return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+        }
+        $id = $this->request->getVar('id_produk');
+        if($this->m_produk->delete($id))
+        {
+            return $this->response->setJSON(['token' => csrf_hash()]);
+        }
     }   
 
 }
