@@ -44,16 +44,17 @@ abstract class BaseController extends Controller
     // protected $session;
 
     /**
-     * Constructor.
+     * @return void
      */
-    protected $web = [];
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
+        $this->helpers = array_merge($this->helpers, ['setting']);
+
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
-        
+
         // E.g.: $this->session = \Config\Services::session();
     }
 }
