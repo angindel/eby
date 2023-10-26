@@ -16,8 +16,6 @@
 <?= $this->include('backend/layout/admin/sidebar') ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div class="mb-3"></div>
-    <!-- /.content-header -->
     <?= $this->renderSection('content') ?>
   </div>
   <!-- /.content-wrapper -->

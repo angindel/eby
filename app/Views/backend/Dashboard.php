@@ -1,11 +1,23 @@
 <?= $this->extend('backend/layout/admin/dashboard_layout') ?>
 <?= $this->section('content') ?>
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Dashboard</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="<?= base_url("administrator") ?>">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col"><h1 class="m-0">Dashboard</h1></div>
-      </div>
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-lg-3 col-6">
@@ -65,9 +77,9 @@
         </div>
         <!-- /.row -->
         <!-- Main row -->
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
+        <div class="row bg-secondary p-2">
+            <div class="col-md-6 col-sm-7">
+                <div class="card bg-dark">
                     <div class="card-header border-transparent">
                         <h3 class="card-title">Transaksi Terakhir</h3>
                         <div class="card-tools">
@@ -108,10 +120,75 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-6 col-sm-5 p-0">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="info-box mb-2 bg-warning">
+                            <!-- <span class="info-box-icon"><i class="fa-solid fa-rupiah-sign"></i></span> -->
+                            <div class="info-box-content">
+                                <span class="info-box-text text-center">Hari ini</span>
+                                <span class="info-box-number text-center"><span class="eltran"><?= is_null($total['transaksi']['hariini']->total) ? 0 : $total['transaksi']['hariini']->total ?></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">    
+                    <div class="info-box mb-2 bg-warning">
+                        <!-- <span class="info-box-icon"><i class="fa-solid fa-rupiah-sign"></i></span> -->
+                        <div class="info-box-content">
+                            <span class="info-box-text text-center">Minggu ini</span>
+                            <span class="info-box-number text-center"><span class="eltran"><?= is_null($total['transaksi']['mingguini']->total) ? 0 : $total['transaksi']['mingguini']->total ?></span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <div class="info-box mb-2 bg-success">
+                        <!-- <span class="info-box-icon"><i class="fa-solid fa-rupiah-sign"></i></span> -->
+                        <div class="info-box-content">
+                            <span class="info-box-text text-center">Bulan Ini</span>
+                            <span class="info-box-number text-center"><span class="eltran"><?= is_null($total['transaksi']['bulanini']->total) ? 0 : $total['transaksi']['bulanini']->total ?></span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <div class="info-box mb-2 bg-danger">
+                        <!-- <span class="info-box-icon"><i class="fa-solid fa-rupiah-sign"></i></span> -->
+                        <div class="info-box-content">
+                            <span class="info-box-text text-center">Bulan Lalu</span>
+                            <span class="info-box-number text-center"><span class="eltran"><?= is_null($total['transaksi']['bulanlalu']->total) ? 0 : $total['transaksi']['bulanlalu']->total ?></span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="info-box mb-2 bg-info">
+                        <!-- <span class="info-box-icon"><i class="fa-solid fa-rupiah-sign"></i></span> -->
+                        <div class="info-box-content">
+                            <span class="info-box-text text-center">Tahun ini</span>
+                            <span class="info-box-number text-center"><span class="eltran"><?= is_null($total['transaksi']['tahunini']->total) ? 0 : $total['transaksi']['tahunini']->total ?></span></span>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+
+            </div>
         </div>
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-<?= $this->endSection('content') ?>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var eltran = document.querySelectorAll(".eltran");
+        eltran.forEach(vtran => {
+            vtran.textContent = new Intl.NumberFormat('id', { style: "currency", currency: "IDR" }).format(parseInt(vtran.textContent));
+        });
+    });
+</script>
+<?= $this->endSection() ?>

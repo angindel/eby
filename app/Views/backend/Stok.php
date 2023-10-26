@@ -1,6 +1,11 @@
 <?= $this->extend('backend/layout/admin/dashboard_layout') ?>
+
 <?= $this->section('link') ?>
 <link href="<?= site_url('asset/jquery-ui/jquery-ui.min.css') ?>" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<?= base_url("asset/sweetalert2/sweetalert2.min.css") ?>">
+<?= $this->endSection() ?>
+
+<?= $this->section('style') ?>
 <style type="text/css">
   #hapus-tran, #edit-tran {
     cursor: pointer;
@@ -64,6 +69,58 @@
 </style>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Stok</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="<?= base_url("administrator") ?>">Home</a></li>
+          <li class="breadcrumb-item active">Stok</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">  
+          <div class="card border border-primary">
+            <div class="card-header bg-primary">
+              <div class="xinfo"></div>
+              <h3 class="card-title">Semua Stok</h3>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <input class="mtcsrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+              <!-- DATATABLES -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="tabel_serverside" class="table table-bordered table-striped table-condensed" style="width: 100%">
+                    <thead>
+                      <tr>
+                        <th style='width:30px'>No</th>
+                        <th>Nama Produk</th>
+                        <th>Stok Awal</th>
+                        <th>Stok Akhir</th>
+                        <th>Dibuat</th>
+                        <th>Diperbarui</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                </table>
+              </div>
+            </div>
+          </div><!-- /.card-body -->
+        </div>
+      </div><!-- /.col-sm-12 -->
+    </div>
+  </div>
+</section>
+<!-- /.content -->
 <div id="dialog-form" title="Edit Stok"> 
   <form>
     <input type="hidden" id="id-e" name="id">
@@ -90,41 +147,11 @@
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
   </form>
 </div>
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-            <div class="col-xs-12">  
-              <div class="box">
-                <div class="box-header">
-                  <div class="xinfo"></div>
-                  <h3 class="box-title">Semua Stok</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <input class="mtcsrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-                  <!-- DATATABLES -->
-                  <table id="tabel_serverside" class="table table-bordered table-striped table-condensed" style="width: 100%">
-                    <thead>
-                      <tr>
-                        <th style='width:30px'>No</th>
-                        <th>Nama Produk</th>
-                        <th>Stok Awal</th>
-                        <th>Stok Akhir</th>
-                        <th>Dibuat</th>
-                        <th>Diperbarui</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                </table>
-              </div><!-- /.box-body -->
-            </div>
-          </div>
-      </div>
-    </section>
-    <!-- /.content -->
 <?= $this->endSection() ?>
 
 <?= $this->section('script') ?>
 <script src="<?= site_url('asset/jquery-ui/jquery-ui.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url("asset/sweetalert2/sweetalert2.all.min.js") ?>"></script>
 <script type="text/javascript">
   let csrf = $('.mtcsrf');
   let csrfName = csrf.attr('name');
@@ -132,18 +159,20 @@
   $(function(){
     // START-DATATABLES
     var table = $('#tabel_serverside').DataTable({
+      'responsive' : true,
       'processing' : true,
       'serverSide' : true,
       'serverMethod' : 'post',
-      'searchDelay' : 2000,
       'columnDefs': [
         {
+          responsivePriority: 1,
           targets: [0],
           data : 'no',
           orderable: false,
           width: '5%'
         },
         {
+          responsivePriority: 2,
           targets: [1],
           data : 'nama',
           render: function ( data, type, row ) {
@@ -152,35 +181,49 @@
           width: '30%'
         },
         {
+          responsivePriority: 3,
           targets: [2],
           data : 'stok_awal',
           title : 'Stok Awal',
           width: '5%'
         },
         {
+          responsivePriority: 4,
           targets: [3],
           data : 'stok_akhir',
           title : 'Stok Akhir',
           width: '5%'
         },
         {
+          responsivePriority: 5,
+          className: "min-tablet",
           targets: [4],
           data : 'created_at',
           title : 'Dibuat'
         },
         {
+          responsivePriority: 6,
+          className: "min-tablet",
           targets: [5],
           data : 'updated_at',
           title : 'Diperbarui'
         },
         {
+          responsivePriority: 7,
           data:'id_stok',
           targets: [-1],
-          className: "dt-center",
+          className: "min-tablet dt-center",
           render: function ( data, type, row ) {
-            return '<div class="row"><div class="col-6"><i id="edit-tran" class="fa fa-pencil"></i></div><div class="col-6"></div></div>';
+            return `<div class='d-flex flex-row justify-content-around'>
+                      <div class='edit-tran'>
+                        <button class='btn btn-success btn-sm' title="Edit Data">
+                          <i class='fa-solid fa-edit'></i>
+                        </button>
+                      </div>
+                  </div>`;
           },
-          orderable: false
+          orderable: false,
+          width: '10%'
         },
       ],
       order: [[0,'desc']],
@@ -218,6 +261,26 @@
               "sNext": "Selanjutnya >"
          }
       },
+      "dom" : "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
+              "<'row'<'col-sm-12'tr>>" +
+              "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+      buttons: [
+        {
+          extend: 'colvis',
+          text: '<i class="fa-solid fa-eye"></i>',
+          className: "bg-warning"
+        },
+        {
+          extend: 'excel',
+          text: '<i class="fa-solid fa-file-excel fa-xl"></i>',
+          className: 'bg-success'
+        },
+        {
+          extend: 'pdf',
+          text: '<i class="fa-solid fa-file-pdf fa-xl"></i>',
+          className: 'bg-danger'
+        },
+      ]
     });
     // END-DATATABLES
 
@@ -232,7 +295,15 @@
       modal: true,
       buttons: {
         "Simpan Perubahan": function() {
-          editTran();
+          editStok()
+            .then((data) => {
+              csrf.val(data.token);
+              Swal.fire('Stok Berhasil Di Edit','','success');
+              table.ajax.reload();
+            })
+            .catch((error) => {
+              Swal.fire('Terjadi Kesalahan, harap me-refresh halaman ini','','error');
+            });
           dform.dialog( "close" );
         },
         Cancel: function() {
@@ -246,14 +317,22 @@
 
     form = dform.find( "form" ).on( "submit", function( event ) {
       event.preventDefault();
-      editTran();
+      editStok()
+        .then((data) => {
+          csrf.val(data.token);
+          Swal.fire('Stok Berhasil Di Edit','','success');
+          table.ajax.reload();
+        })
+        .catch((error) => {
+          Swal.fire('Terjadi Kesalahan, harap me-refresh halaman ini','','error');
+        });
       dform.dialog("close");
     });
 
     // END-DIALOG-EDIT-DATA
 
     // EDIT-DATA-TRANSAKSI
-    $('#tabel_serverside tbody').on('click', 'i.fa-pencil', function(e){
+    $('#tabel_serverside tbody').on('click', '.edit-tran', function(e){
       var d = table.row( $(this).parents('tr') ).data();
       var zz = $("#dialog-form").find('input');
       $(zz[0]).val(d.id_stok);
@@ -265,13 +344,14 @@
     });
 
     
-    function editTran(){
-      var id = $('#id-e').val();
-      var nama = $('#nama-e').val();
-      var qty = $('#stoks-e').val();
+    function editStok(){
+      let id = $('#id-e').val();
+      let nama = $('#nama-e').val();
+      let qty = $('#stoks-e').val();
       // var total = $('#stoke-e').val();
       csrfHash = csrf.val();
-       $.ajax({
+      return new Promise((resolve, reject) => {
+        $.ajax({
           url: "<?= site_url('administrator/ajdt/stok/edit') ?>",
           type: 'post',
           data: {
@@ -280,12 +360,9 @@
             stok_awal : qty,
             // stok_akhir : total,
             [csrfName]: csrfHash
-          },
-          success: function(data){
-            csrf.val(data.token);
-            table.ajax.reload();
           }
-        });
+        }).done(resolve).fail(reject);
+      });
     }
     // END-EDIT-DATA-TRANSAKSI
 
