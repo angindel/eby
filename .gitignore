@@ -147,3 +147,8 @@ system/
 /app/Config/App.php
 #/composer.lock
 #vendor/
+progress
+app/Views/backend/Cetaktelp.php
+app/Views/backend/Telepon.php
+app/Views/backend/layout/admin/telepon_layout.php
+app/Views/backend/layout/admin/template_telp.php
