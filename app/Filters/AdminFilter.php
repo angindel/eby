@@ -26,7 +26,8 @@ class AdminFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $ec = \Config\Services::encrypter();
-        if($request->getUri()->getPath() != 'administrator')
+        $uri = $request->getUri();
+        if($uri->getRoutePath() != 'administrator')
         {
             if(!empty(session()->get('username'))) 
             {
