@@ -21,8 +21,15 @@
               <ul id="top-nav-list" class="nav ms-auto">
                   <li class="nav-item">
                     <?php if(auth()->loggedIn()) : ?>
-                      <a href="<?= base_url('/user/dashboard') ?>" class="btn btn-md btn-warning">Akun</a>
-                      <a href="<?= base_url('/user/logout') ?>" class="btn btn-md btn-danger">Keluar</a>
+                      <div class="dropstart">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Akun
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="<?= base_url('/user/dashboard') ?>">Profil</a></li>
+                          <li><a class="dropdown-item" href="<?= base_url('/user/logout') ?>">Keluar</a></li>
+                        </ul>
+                      </div>
                     <?php else : ?>
                       <a href="<?= base_url('/login') ?>" class="btn btn-md btn-primary">Login / Register</a>
                     <?php endif ?>

@@ -75,6 +75,7 @@
                     <?php endif ?>
 
                 </form>
+                {{ShieldOAuthButtonForLoginPage}}
             </div>
         </div>
     </div>

@@ -67,6 +67,7 @@
                     <p class="text-center"><?= lang('Auth.haveAccount') ?> <a href="<?= url_to('login') ?>"><?= lang('Auth.login') ?></a></p>
 
                 </form>
+                {{ShieldOAuthButtonForRegisterPage}}
             </div>
         </div>
     </div>

@@ -17,6 +17,14 @@ class LoginController extends FrontendController
         $this->web['title'] = 'EbyKarya';
     }
 
+    public function dashboard_page()
+    {
+        $user = auth()->user();
+        $this->web['user'] = $user;
+        $this->web['data'] = $user->toRawArray();
+        return view(setting('Auth.views')['dashboard'], $this->web);
+    }
+
     public function login_page()
     {
         helper('form');

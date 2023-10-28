@@ -45,7 +45,8 @@ class Filters extends BaseConfig
                     'auth/a/*',
                     'produk*',
                     'tes*',
-                    'administrator*'
+                    'administrator*',
+                    'oauth*'
                 ]
             ]
             // 'honeypot',

@@ -14,7 +14,8 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "codeigniter4/shield": "^1.0@beta",
+        "codeigniter4/shield": "dev-develop",
+        "datamweb/shield-oauth": "dev-develop",
         "google/apiclient": "^2.0",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"

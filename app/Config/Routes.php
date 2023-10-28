@@ -20,11 +20,6 @@ $routes->get('/auth/google/login', 'Home::login_google_proses');
  */
 // $routes->get('/register', 'Home::register_page');
 
-/**
- * USER DASHBOARD
- */
-$routes->get('/user/dashboard', 'Home::dashboard_user');
-$routes->get('/user/logout', 'Auth\LoginController::logout');
 
 // TELEPON
 // $routes->get('/telepon', 'Home::telepon');
@@ -44,6 +39,12 @@ $routes->get('produk/kategori/(:any)', 'Home::produk_kategori/$1');
 // $routes->get('tes', 'Home::fake');
 // $routes->get('dbtes', 'Home::dbtes');
 $routes->get('tes/(:num)/(:num)', 'Home::produkIS/$1/$2');
+
+/**
+ * USER DASHBOARD
+ */
+$routes->get('/user/dashboard', 'Auth\LoginController::dashboard_page');
+$routes->get('/user/logout', 'Auth\LoginController::logout');
 
 
 $routes->get('/login', 'Auth\LoginController::login_page');
